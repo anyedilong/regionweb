@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>昭通市人口健康信息大数据</title>
+    <link rel="stylesheet" href="/static/css/common/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/css/reset.css">
+    <link rel="stylesheet" href="/static/css/daping/base.css">
+    <link rel="stylesheet" href="/static/css/daping/dyroll.css">
+    <script src="/static/js/common/jquery-2.1.4.min.js"></script>
+    <script src="/static/js/common/bootstrap.min.js"></script>
+    <script src="/static/js/common/echarts.min.js"></script>
+    <script src="/static/js/common/loginValidate.js"></script>
+    <script src="/static/js/common/jquery.util.js"></script>
+    <script src="/static/js/daping/qujing.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="pageTop">
+            <div class="page-topl">
+                <div class="sanjiaozuo">
+                    <span></span>
+                </div>
+            </div>
+            <div class="pageTopTit">
+                <div style=" width: 100%;">昭通市区域卫生大数据</div>
+                <!--<img src="./img" alt="">-->
+            </div>
+            <div class="pageTopDT page-topr">
+                <div class="pageTopTime"></div>
+                <div class="pageTopDate"></div>
+                <div class="sanjiaoyou">
+                    <span></span>
+                </div>
+            </div>
+        </div>
+        <div class="pageBody chartsBox">
+            <div class="row" style="width: 100%;margin: 0">
+                <div class="col-md-4 col-xs-4 col-sm-4 chartsBox-l">
+                    <div class="chartsl-a boxlights boxborder">
+                        <div class="chartboxTit">家庭医生年度签约人次</div>
+                        <div id="jiayicharts"></div>
+                        <!--<div id="jiayicharts" style="width: 100%;height:250px;"></div>-->
+                    </div>
+                    <div class="chartsl-b boxlights boxborder">
+                        <div class="chartboxTit">人群类型占比</div>
+                        <div id="renquncharts"></div>
+                        <!--<div id="renquncharts" style="width: 100%;height:290px;"></div>-->
+                    </div>
+                    <div class="chartsl-c boxlights boxborder">
+                        <div class="chartboxTit">履约人数</div>
+                        <div id="lvyuecharts"></div>
+                        <!--<div id="lvyuecharts" style="width: 100%;height:250px;"></div>-->
+                    </div>
+                </div>
+                <div class="col-md-4 col-xs-4 col-sm-4 chartsBox-c">
+                    <div class="chartsc-a boxlights row boxborder" style="width: 100%;margin: 0 0 10px">
+                        <div class="col-md-3">
+                            <div class="chartsc-a-data" id="archiveNum"></div>
+                            <div class="chartsc-a-dis">建档人数</div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="chartsc-a-data" id="signNum"></div>
+                            <div class="chartsc-a-dis">年度签约人数</div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="chartsc-a-data" id="tjNum"></div>
+                            <div class="chartsc-a-dis">年度体检人数</div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="chartsc-a-data" id="nucleinNum"></div>
+                            <div class="chartsc-a-dis">新冠人数</div>
+                        </div>
+                    </div>
+                    <div class="chartsc-b boxlights">
+                        <div id="mapcharts"></div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-xs-4 col-sm-4 chartsBox-r">
+                    <div class="chartsr-a boxlights boxborder">
+                        <div class="chartboxTit">年度就诊人次</div>
+                        <div id="jiuzhencharts"></div>
+                    </div>
+                    <div class="chartsr-b boxlights boxborder">
+                        <div class="chartboxTit">年度入/出院人次</div>
+                        <div id="churucharts"></div>
+                    </div>
+                    <div class="chartsr-c boxlights boxborder">
+                        <div class="chartboxTit">县区医院就诊人次</div>
+                        <div id="xianqucharts"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="pageFoot clearfix">
+            <div class="serviceTit fl">服务动态</div>
+			<div id="scrollobj" class="serviceCont fl wrap" style="white-space:nowrap;overflow:hidden;"> 
+				<div class="cont" id="scrollCont"></div>
+			</div>
+        </div>
+    </div>
+</body>
+<script type="text/javascript">
+    let pageTopDate = document.getElementsByClassName('pageTopDate')[0]
+    let pageTopTime = document.getElementsByClassName('pageTopTime')[0]
+    let timers = window.setInterval(times,1000)
+    function times() {
+        clearTimeout(timers);//清除定时器
+        let date = new Date()
+        let years = date.getFullYear()
+        let month = date.getMonth() + 1
+        let days = date.getDate()
+        let hours = date.getHours()
+        let minutes = (date.getMinutes() > 9) ? date.getMinutes() : '0' + date.getMinutes()
+        let seconds = (date.getSeconds() > 9) ? date.getSeconds() : '0' + date.getSeconds()
+        pageTopDate.innerHTML = years + '年' + month + '月' + days +  '日'
+        pageTopTime.innerHTML = hours + ':' + minutes + ':' + seconds
+        timers = window.setInterval(times,1000)
+    }
+</script>
+<script src="/static/js/daping/chartsJs.js"></script>
+</html>

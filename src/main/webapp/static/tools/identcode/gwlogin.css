@@ -1,0 +1,225 @@
+﻿@charset "utf-8";
+/* CSS Document */
+*{
+	padding:0;
+	margin:0;
+	font-family: "微软雅黑";
+	font-size: 1em;
+	}
+a{
+	text-decoration:none;
+	}
+html{ margin: 0;}
+html,body{
+	width:100%;
+	height:100%;
+	overflow:hidden;	
+	}
+#bg{
+	position: absolute;
+	width:100%;
+	height: 100%;
+	overflow: hidden;
+	z-index: -99;
+	background: #00B38A;
+	top: 0;
+	left: 0;
+}
+.bg img{
+	width: 100%;
+	height: 100%;
+}
+#con{
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	z-index: 0;
+	top: 0;
+	left: 0;
+}
+.title{
+	position: relative;
+	width: 30%;
+	/*height:7.7% ;*/
+	top: 8%;
+	left: 35%;
+}
+.title img{
+	width:100% ;
+}
+@media only screen and (max-width: 1440px) {
+    .title {
+        width: 44%;
+        left:28%;
+    }
+}
+#login {
+    position: absolute;
+    width: 26%;
+    height: 36%;
+    top: 20%;
+    left: 37%;
+}
+.login_bg{
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	z-index: 2;
+}
+.login_bg img{
+	width: 100%;
+	height: 100%;	
+}
+.login_content{
+	position: absolute;
+	z-index: 3;
+	width:80%;
+	height: 76%;
+    left: 9%;
+    top:10%;
+
+}
+input{
+	position: inherit;
+	display: block;
+	color: #d0d4d3;
+	width: 90%;
+	padding-left: 40px;
+}
+input,button{
+	border-radius: 3px;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	border:0;
+	height:3em;
+	line-height: 3em;
+}
+#txt_userName{
+	background: #fff url(../../image/user.png) no-repeat 6px center;
+}
+input[name="password"]{
+	top: 26%;
+	background:#fff url(../../image/password_icon.png) no-repeat 8px center;
+}
+.yzm{
+	width:100%;
+	height: 40px;
+	position: absolute;
+	top: 52%;
+}
+.button{
+	position: absolute;
+	display: block;
+	top: 78%;
+	width: 50%;
+	left: 25%;
+	
+}
+button{	
+	width: 100%;
+	background: #00b38a;
+	border: 0;
+	color: #fff;
+	letter-spacing: 10px;
+	outline: none;
+	cursor: pointer;
+}
+#picture{
+	position: absolute;	
+	width: 100%;
+	height: 35%;
+	top:60%;
+	z-index: 10;
+}
+.picture_bg{
+	width: 100%;
+	position:  inherit;
+	background:#048869;
+	height: 10%;
+	bottom: 0;
+	left: 0;
+	z-index:10;	
+}
+.hospital{
+	position: inherit ;
+	z-index: 11;	
+	width:22%;
+	height: 62%;
+	top: 30%;
+	left: 39%;
+}
+.line{
+	position: inherit;
+	z-index: 12;
+	width:32% ;
+	height:46%;
+	left: 35%;
+	bottom: 35%;
+}
+.shebei{
+	position: inherit;
+	z-index: 13;
+	width:40% ;
+	height: 50%;
+	left: 32%;
+}
+img[name="xueyaji"],img[name="xuetang"],img[name="xindiantu"],img[name="shiguan"]{
+	position: inherit;
+	width:9%;
+	height: 39%;
+}
+img[name="xueyaji"]{
+	left:0;
+	bottom:0;
+}
+img[name="xuetang"]{
+	left: 30%;
+}
+img[name="xindiantu"]{
+	left: 66%;
+}
+img[name="shiguan"]{
+	right: 5%;
+	bottom:1%;
+}
+.pc{
+	position: inherit ;
+	z-index: 14;
+	width:10%;
+	height:44%;
+	left: 44%;
+	bottom:3%;
+	
+}
+.yxt{
+	position: inherit ;
+	z-index:15;
+	width:9% ;
+	height: 34%;
+	bottom:16%;
+	left: 43.5%;
+}
+.s{
+	position: inherit;
+	z-index: 16;
+	width: 4%;
+	height: 22%;
+	left: 47%;
+	bottom:12%;
+}
+.hospital img,.line img,.pc img,.yxt img,.s img{
+	width: 100%;
+	height: 100%;
+}
+#foot{
+	width: 100%;
+	height: 3%;
+	position: absolute;
+	left: 0;
+	bottom:0;
+	background: #00B38A;
+	font-size: 14px;
+	text-align: center;
+	color: #048869;
+	padding-top: 1%;
+}

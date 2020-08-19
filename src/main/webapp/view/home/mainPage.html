@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>区域卫生信息化管理平台</title>
+    <link rel="stylesheet" href= "/static/css/home/mainPageCss.css">
+    <link rel="stylesheet" href="/static/css/publicCss.css">
+    <script src="/static/js/common/jquery-2.1.4.min.js"></script>
+    <script src="/static/js/common/loginValidate.js"></script>
+    <script src="/static/img/icon/iconfont.js"></script>
+    <script src="/static/js/home/mainPageJS.js"></script>
+    <script type="text/javascript">
+	    $(document).ready(function () {
+	    	//获取登录用户信息
+	    	initUserInfo();
+	    });
+	    
+	    function initUserInfo(){
+            $.ajax({
+                cache: false,
+                dataType: 'json',
+                contentType: 'application/json',
+                url: roadPath + "/family/user/getUserInfo",
+                type: "POST",
+                success: function (data) {
+                    if (data.retCode == "0"){
+                        if (data.data != "") {
+                            /* localStorage.removeItem("loginUser");
+                            //得到用户登录的相关保存数值
+                            var jsParam = new Object();
+                            jsParam.username = data.data.userName;
+                            jsParam.name = data.data.name;
+                            jsParam.ID = data.data.id;
+                            jsParam.orgname = data.data.org.orgName;
+
+                            //得到当前登录用户所在的目录树
+                            var orgTree = new Object();
+                            orgTree.orgtree = data.data.orgTree;
+                            localStorage.setItem("org", JSON.stringify(data.data.org));//保存登陆用户所属机构信息
+                            localStorage.setItem("loginUser", JSON.stringify(jsParam));//保存登陆用户信息
+                            localStorage.setItem("orgTree", JSON.stringify(orgTree));//保存登陆用户所在的组织机构目录树信息 */
+                           // localStorage.setItem("roleLeve", JSON.stringify(responseText.data.role_leve_list));
+                            $(".username").text(data.data.userName+"-"+data.data.org.orgName);
+                        }
+                        optionCookie(data.authorToke)
+                      	//获取登录用户的菜单树
+            	    	initMenuTree();
+                    }
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                },
+                complete: function (XMLHttpRequest, textStatus) {
+                }
+            });
+	    }
+	    
+	    function initMenuTree(){
+	    	$.ajax({
+            	type: "POST",
+                cache: false,
+                dataType: 'json',
+                contentType: 'application/json',
+                url: roadPath + "/family/menu/getUserMenuTree",
+                data:{},
+                success: function (data) {
+                	if(data.retCode == '0'){
+                		GetData(0, data.data);
+                        $("#menuContent").html(menus);
+						if($("#menuContent").children()[1] != undefined){
+							$("#menuContent").children()[1].children[0].classList.add('menuact1');
+	                        $("#menuContent").children()[1].children[1].children[0].children[0].classList.add('menuact2');
+	                        $("#menuContent").children()[1].children[1].children[0].children[0].setAttribute("act", true);
+	                        $("#menuContent").children()[1].children[1].style.display='block';
+						}else{
+							$("#mainPage").attr('src', '');
+							$("#homePage").hide();
+						}                      
+                        optionCookie(data.authorToke);
+                	}
+                }
+            });
+	    }
+	    
+	  	//菜单列表html
+	    var menus = '';
+	    //根据菜单主键id生成菜单列表html；id：菜单主键id；arry：菜单数组信息
+	    function GetData(id, arry) {
+	        var childArry = GetParentArry(id, arry);
+	        if (childArry.length > 0) {
+	            for (var i in childArry) {
+	            	//判断菜单是否是第一级；第一级需要图标
+	            	if(childArry[i].type == "1" && childArry[i].url == ""){
+	            		menus += '<li class="menu-li yiji-li">'+
+	            					'<div class="menu-div clearfix">'+
+	            						'<div class="li-icon"><i class="'+childArry[i].icon+'"></i></div>'+
+	            						'<div class="li-tit">'+childArry[i].name+'</div></div><ul class="menu-ul erji-ul">';
+	            		GetData(childArry[i].id, arry);
+	                    menus += '</ul></li>';
+	            	}else if(childArry[i].type == "1" && childArry[i].url != ""){
+	            		menus += '<li class="menu-li erji-li">'+
+	            					'<div class="menu-div clearfix" act="false" src="'+childArry[i].url+'"><div class="li-tit">'+childArry[i].name+'</div></div></li>';
+	            	}
+	            }
+	        }
+	    }
+	    //根据菜单主键id获取下级菜单；id：菜单主键id；arry：菜单数组信息
+	    function GetParentArry(id, arry) {
+	        var newArry = new Array();
+	        for (var i in arry) {
+	            if (arry[i].parentId == id)
+	                newArry.push(arry[i]);
+	        }
+	        return newArry;
+	    }
+	    
+	  	//退出
+        function thisExit() {
+        	$.ajax({
+            	type: "POST",
+                cache: false,
+                dataType: 'json',
+                contentType: 'application/json',
+                url: roadPath + "/login/exit",
+                data:{},
+                success: function (data) {
+                	if(data.retCode == '0'){
+                		localStorage.removeItem("author")
+                		clearCookie("author");
+                		window.location.href = "../../index.html";
+                	}
+                }
+            });
+        }
+
+    </script>
+</head>
+<body>
+    <div class="homeBox">
+        <div class="mainTop">
+            <div class="pingtaiName">区域卫生信息化管理平台</div>
+            <div class="topBtn-right">
+                <div class="userimg">
+                    <img src="/static/img/mapmarker.png" alt="">
+                </div>
+                <div class="username"></div>
+                <div class="homeUrl"><a><i class="qyhradio"></i></a></div>
+                <div class="logOut"><a onclick="thisExit();"><i class="qyhclose1"></a></i></div>
+            </div>
+        </div>
+        <div class="mainBody">
+            <div class="leftMenu">
+                <div class="menuBtn"><i class="qyhshouqi"></i></div>
+                <ul class="menu-ul yiji-ul" id="menuContent">
+                    
+                </ul>
+            </div>
+            <div class="rightCont">
+                <div class="PageTit">
+                    <!-- <div class="arrowBtn fl">
+                        <div class="arrow-left fl">
+                            <i class="qyhCen-helalth-more-ico1"></i>
+                        </div>
+                        <div class="arrow-right fl">
+                            <i class="qyhCen-helalth-more-ico1"></i>
+                        </div>
+                    </div> -->
+                    <div class="refreshBtn fl">
+                        <i class="qyhrefresh"></i>
+                    </div>
+                    <div class="tabBtn fl" id="homePage">
+                        <ul class="tabUl fl" style="margin:0 !important;">
+                            <li class="tabLi tabLiact" src="../statsmanage/medicalIncome.html" his="../statsmanage/medicalIncome.html">
+                                <span>医疗收入</span>
+                                <i class="qyhclose iconBtn"></i>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <iframe id="mainPage" src="../statsmanage/medicalIncome.html"></iframe>
+            </div>
+        </div>
+    </div>
+</body>	
+</html>

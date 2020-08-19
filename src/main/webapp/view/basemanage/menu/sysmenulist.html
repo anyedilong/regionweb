@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <title>菜单目录</title>
+    <link rel="stylesheet" href="/static/css/publicCss.css">
+    <link rel="stylesheet" href="/static/css/basemanage/sysmenu.css">
+    <script src="/static/js/publicJs.js"></script>
+    <script src="/static/js/basemanage/menu/sysmenulist.js"></script>
+    <script src="/static/tools/zTree/js/jquery.ztree.tz.js"></script>
+	<style>
+		select::-ms-expand{ display: none; }
+		tr td {
+			white-space: nowrap; color:red;
+		}
+		.pagination {
+			margin: 0;
+		}
+	    .ztree li span.button.add {
+		    margin-left:2px; 
+		    margin-right: -1px; 
+		    background-position:-144px 0; 
+		    vertical-align:top; 
+		    *vertical-align:middle
+	    }
+	   
+	</style>
+</head>
+<body>
+    <div class="animated fadeInRight">
+	    <div class="dictionBox clearfix">
+		    <div class="dicBox dicBox-tree" style="padding-right: 0;border-right: 1px solid #ebebf5;">
+	            <div class="treebox">
+	                <ul id="menuTree" class="ztree"></ul>
+	            </div>
+	        </div>
+	          <div class="dicBox dicBox-table">
+		          <div class="tableTit">菜单目录</div>
+		          <div class="tableForm form-box clearfix">
+		          	 <input id='parentId' type="hidden" name="parentId" />
+		              <div class="form-item" style="margin-right: 30px">
+		                  <label for="dictionName">菜单名称</label>
+		                  <input type="text" name="name" id="name">
+		              </div>
+		              <div class="form-item" style="margin-right: 20px">
+		                  <input type="button" class="search" id="searchBtn" value="查询">
+		              </div>
+		              <div class="form-item" style="margin-right: 20px">
+		                  <input type="button" class="reset" id="resetBtn" value="重置">
+		              </div>
+		              <div class="form-item" style="float: right">
+		                  <input type="button" class="add" onclick="openSaveHandDialog();" value="添加操作">
+		              </div>
+		          </div>
+		          <div class="tableBox">		
+		                <div class="tabledata-box">
+		                    <table>
+		                        <thead>
+		                            <tr>
+		                                <th>菜单名称</th>
+				                        <th>类型</th>
+				                        <th>操作类型</th>
+				                        <th>操作</th>
+		                            </tr>
+		                        </thead>
+		                    </table>
+		                </div>
+	            	</div>
+		            <div class="pagingBox" style="margin-top:20px">
+		                <div id="myPage" class="myPage"><!-- 这里显示分页 --></div>
+		            </div>
+		     </div>
+	    </div>
+	</div>
+</body>
+</html>

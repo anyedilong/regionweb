@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <title>用户目录</title>
+    <link rel="stylesheet" href="/static/css/publicCss.css">
+    <link rel="stylesheet" href="/static/css/basemanage/sysmenu.css">
+    <script src="/static/js/publicJs.js"></script>
+    <script src="/static/js/basemanage/user/sysuserlist.js"></script>
+    <script src="/static/tools/zTree/js/jquery.ztree.all.min.js"></script>
+	<style>
+		select::-ms-expand{ display: none; }
+		tr td {
+			white-space: nowrap;
+		}
+		.pagination {
+			margin: 0;
+		}
+	    .ztree li span.button.add {
+		    margin-left:2px; 
+		    margin-right: -1px; 
+		    background-position:-144px 0; 
+		    vertical-align:top; 
+		    *vertical-align:middle
+	    }
+	    .ztree {
+	    	line-height: 40px;
+	    }
+	</style>
+</head>
+<body>
+    <div class="animated fadeInRight">
+	    <div class="dictionBox clearfix">
+		    <div class="dicBox dicBox-tree" style="width:25%;padding-right: 0;border-right: 1px solid #ebebf5;">
+	            <div class="treebox">
+	                <ul id="menuTree" class="ztree"></ul>
+	            </div>
+	        </div>
+	          <div class="dicBox dicBox-table" style="width:74%;">
+		          <div class="tableTit">用户目录</div>
+		          <div class="tableForm form-box clearfix">
+		          	 <input id='orgId' type="hidden" name="orgId" />
+		              <div class="form-item" style="margin-right: 30px">
+		                  <label for="dictionName">用户名称</label>
+		                  <input type="text" name="username" id="username">
+		              </div>
+		              <div class="form-item" style="margin-right: 30px">
+		                  <label for="dictionName">姓名</label>
+		                  <input type="text" name="name" id="name">
+		              </div>
+		              <div class="form-item" style="margin-right: 30px">
+		              	  <div id="checkDiv" class="myCheckLi" act="false" style="float: none; display: inline-block;">
+					      	  <div class="myCheckicon">
+					              <i class="qyhtick-user-icon"></i>
+					          </div>
+					          <div class="myCheckdiv">包含子集</div>
+					          <div style="clear: both"></div>					       
+					      </div>	         
+		              	  <!-- <input type="checkbox" name="includeSubFlg" id="includeSubFlg" checked="checked" style="width:20px; height:20px;" >
+		                  <label for="dictionName">包含子集</label> -->
+		              </div>
+		              <div class="form-item" style="margin-right: 20px">
+		                  <input type="button" class="search" id="searchBtn" value="查询">
+		              </div>
+		              <div class="form-item" style="margin-right: 20px">
+		                  <input type="button" class="reset" id="resetBtn" value="重置">
+		              </div>
+		              <div class="form-item" style="float: right">
+		                  <input type="button" class="add" onclick="openSaveDialog();" value="添加">
+		              </div>
+		          </div>
+		          <div class="tableBox">		
+		                <div class="tabledata-box">
+		                    <table>
+		                        <thead>
+		                            <tr>
+		                                <th>用户名称</th>
+				                        <th>姓名</th>
+				                        <th>角色名称</th>
+				                        <th>状态</th>
+				                        <th>操作</th>
+		                            </tr>
+		                        </thead>
+		                    </table>
+		                </div>
+	            	</div>		       
+		            <div class="pagingBox" style="margin-top:20px">
+		                <div id="myPage" class="myPage"><!-- 这里显示分页 --></div>
+		            </div>
+		     </div>
+	    </div>
+	</div>
+</body>
+</html>

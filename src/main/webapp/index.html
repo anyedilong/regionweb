@@ -1,0 +1,206 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <!--下面是ligerui使用的js以及样式表-->
+    <link rel="stylesheet" href="/static/css/publicCss.css">
+    <!--<link rel="stylesheet" href="/static/css/basemanage/sysmenu.css">-->
+    <link rel="stylesheet" href="/static/tools/identcode/jquery.idcode.css">
+    <link rel="stylesheet" href="/static/css/login.css">
+    <script src="/static/js/publicJs.js"></script>
+    <script src="/static/tools/identcode/jquery.idcode.js"></script>
+    <script src="/static/js/common/browser.js"></script>
+    <script type="text/javascript">
+        //点击切换验证码
+        function f_refreshtype() {
+            var Image1 = document.getElementById("img");
+            if (Image1 != null) {
+                Image1.src = Image1.src + "?";
+            }
+        }
+    </script>
+</head>
+
+<body>
+ 	<div class="loginBox">
+        <div class="loginCard">
+            <img class="decorateImg" src="/static/img/login/qyxxh_login_img2.png" alt="">
+            <div class="loginForm">
+                <div class="formTit1">马龙区域卫生信息管理平台</div>
+                <div class="formTit2">欢迎登录</div>
+                <div class="formbox">
+                	<div class="inpbox">
+                		<span class="myLabel">用户名</span>
+                		<input type="text" class="user" placeholder="请输入用户名" onfocus="focus_userName(this)" onchange="inpChange(0)" id="txt_userName"/>
+                	</div>
+                    <div class="inpbox">
+                		<span class="myLabel">密码</span>
+                		<input type="password" class="pass" placeholder="请输入密码" id="txt_password" onchange="inpChange(1)"/>
+                	</div>                   
+                    <div class="idcodeBox inpbox">
+                    	<span class="myLabel">验证码</span>
+                    	<input type="text" class="icode" placeholder="请输入验证码" id="Txtidcode" onchange="inpChange(2)"/>
+                    	<span id="idcode"></span>
+                    </div>              
+                    <input type="button" value="登录" class="loginBtn" id="btn_login" onclick="newUserLogin()">
+                </div>
+                <div class="formRemark">技术支持:云南普技智能科技有限公司 [本系统建议使用Google Chrome 浏览器]</div>
+            </div>
+        </div>
+    </div>
+</body>
+
+<script src="http://pv.sohu.com/cityjson?ie=utf-8"></script>  
+<script type="text/javascript">
+$.idcode.setCode();
+var authToken;
+var loginNum = 0;
+$(document).ready(function () {
+    //判断客户端浏览器版本
+    if ($.browser.msie) {
+        if (jQuery.browser.version < 11) {
+            layer.alert("您当前所使用的浏览器版本过低,为不影响您浏览使用本系统的效果，我们建议您使用最新版本的谷歌浏览器或IE11浏览器！", { icon: 0 }, function () {
+                layer.closeAll();
+            });
+        }
+    }
+ });
+
+//清空用户名
+var focus_userName = function (obj) {
+    $(obj).val("");
+}
+inpChange(-1)
+function inpChange (ind) {
+	if (ind == 0) {
+		if ($('#txt_userName').val() != '') {
+			$('.myLabel').eq(ind).css('display','block')
+		} else {
+			$('.myLabel').eq(ind).css('display','none')
+		}
+	} else if (ind == 1) {
+		if ($('#txt_password').val() != '') {
+			$('.myLabel').eq(ind).css('display','block')
+		} else {
+			$('.myLabel').eq(ind).css('display','none')
+		}
+	} else if (ind == 2) {
+		if ($('#Txtidcode').val() != '') {
+			$('.myLabel').eq(ind).css('display','block')
+		} else {
+			$('.myLabel').eq(ind).css('display','none')
+		}
+	} else {
+		if ($('#txt_userName').val() != '') {
+			$('.myLabel').eq(0).css('display','block')
+		} else {
+			$('.myLabel').eq(0).css('display','none')
+		}
+		if ($('#txt_password').val() != '') {
+			$('.myLabel').eq(1).css('display','block')
+		} else {
+			$('.myLabel').eq(1).css('display','none')
+		}
+		if ($('#Txtidcode').val() != '') {
+			$('.myLabel').eq(2).css('display','block')
+		} else {
+			$('.myLabel').eq(2).css('display','none')
+		}
+	}
+	
+}
+
+document.onkeydown = function(e){
+    var ev = document.all ? window.event : e;
+    if(ev.keyCode==13) {
+    	newUserLogin();
+    }
+}
+
+function newUserLogin() {
+	
+    //输入的用户名
+    var txt_userName = $.trim($("#txt_userName").val());
+    //用户名验证
+    if ($.trim(txt_userName) == "") {
+    	swal("请输入用户名！！！", "", "error");
+        return false;
+    }
+
+    //输入的用户登录密码
+    var txt_password = $.trim($("#txt_password").val());
+    //密码验证
+    if ($.trim(txt_password) == "") {
+    	swal("请输入密码！！！", "", "error");
+        return false;
+    }
+    
+    var param = new Object();
+    param.username = txt_userName;
+    param.password = $.util.rsa(txt_password);
+    param.ip = returnCitySN['cip'];
+    	
+    var IsBy = $.idcode.validateCode();
+    if(!IsBy){
+    	loginNum++;
+    	swal({
+            title: "验证码输入错误，请重新输入!",
+            type: "warning",
+            showConfirmButton: false,
+            showCancelButton: false,
+            height: 10,
+            timer:1500
+        });
+    	if(loginNum > 9){
+    		getSurprise();
+    	}
+    }else{
+	    $.ajax({
+	        type: 'post',
+	        cache: false,
+	        dataType: 'json',
+	        contentType: 'application/json',
+	        url: 'http://demo.sdboletong.com:8098/region/login/index',
+	        //url: 'http://10.2.0.36:8180/region/login/index',
+	        data: JSON.stringify(param),
+	        success: function (data) {
+	            if (data.retCode == "0") {
+	            	optionCookie(data.authorToke);
+	                localStorage.removeItem("author");
+	                localStorage.setItem("author", data.authorToke);//保存该用户类型
+	                window.location.href = "/view/home/mainPage.html";
+	            } else {
+	                swal(data.retMsg, "", "error");
+	            }
+	        },
+	        error: function (data) {
+	        	swal(data.retMsg, "", "error");
+	        },
+	        complete: function () {
+	           // f_refreshtype();
+	        }
+	    });
+  }
+}
+
+function getSurprise(){
+	var param = new Object();
+    param.ip = returnCitySN['cip'];
+	$.ajax({
+        type: 'post',
+        cache: false,
+        dataType: 'json',
+        //url: 'http://demo.sdboletong.com:8098/region/login/giveSurprise',
+        url: 'http://10.2.0.36:8180/region/login/giveSurprise',
+        data: JSON.stringify(param),
+        success: function (data) {
+        	window.location.href = "";
+        },
+        error: function (data) {
+        	swal(data.result.retMsg, "", "error");
+        }
+    });
+}
+</script>
+</html>

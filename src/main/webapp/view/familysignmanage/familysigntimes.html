@@ -1,0 +1,422 @@
+<!--家医签约汇总-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>家医签约汇总</title>
+    <link rel="stylesheet" href="/static/css/publicCss.css">
+    <link rel="stylesheet" href="/static/css/statsmanage/operationStyle.css">
+    <script src="/static/js/publicJs.js"></script>
+    <script type="text/javascript" src="/static/js/common/echarts.min.js"></script>
+    <style>
+    	#income a {
+    		color: #000 !important;
+    	}
+    	.inpatinetName {
+    		display : inline-block;
+    		color : white;
+    		font-size : 24px;
+    	}
+    </style>
+</head>
+<body style="padding:20px 10px;box-sizing: border-box;">
+    <div class="animated fadeInRight" style="width:100%">
+	    <div class="bgcontainer">
+	        <h3 style="margin-left:10px;">年度家医签约汇总</h3>
+	        <ul class="row titleData" style="margin:0 0 20px 0 !important;padding:0 !important;width:100% !important;">
+	            <li class="">
+	                <div class="data1 clearfix">
+	                    <div class="inpatinetName" id="indicatorContainer0"></div>
+	                    <div class="inpatinetIncome" id="inpatinetIncome0"></div>
+	                </div>
+	            </li>
+	            <li class="">
+	                <div class="data2 clearfix">
+	                    <div class="inpatinetName" id="indicatorContainer1"></div>
+	                    <div class="inpatinetIncome" id="inpatinetIncome1"></div>
+	                </div>
+	            </li>
+	            <li class="">
+	                <div class="data3 clearfix">
+	                    <div class="inpatinetName" id="indicatorContainer2"></div>
+	                    <div class="inpatinetIncome" id="inpatinetIncome2"></div>
+	                </div>
+	            </li>
+	            <li class="">
+	                <div class="data4 clearfix">
+	                    <div class="inpatinetName" id="indicatorContainer3"></div>
+	                    <div class="inpatinetIncome" id="inpatinetIncome3"></div>
+	                </div>
+	            </li>
+	            <li style="clear:both"></li>
+	        </ul>
+	        <ul class="row income" style="margin:0 !important;padding:0 !important;width:100% !important;">
+	            <li class="">
+	                <div class="annualIncome">
+	                    <h3>年度家医签约</h3>
+	                    <div id="main" style="width: 100%;height:326px;"></div>
+	                </div>
+	            </li>
+	            <li class="">
+	                <div class="monthIncome" style="overflow: scroll;">
+	                    <h3 id="monthIncomeTile"></h3>
+	                    <ul id="income"></ul>
+	                </div>
+	            </li>
+	             <li style="clear:both"></li>
+	        </ul>
+	    </div>
+	</div>
+    <!--百分比圆环-->
+    <script type="text/javascript">
+	    var orgCode = '';
+		var endTime = '';
+        $(function () {
+        	//初始化家医签约汇总和年度签约人次折线图
+        	initJYTimesData();
+        	//初始化各县区上月签约人次排行
+        	initJYAreaRank();
+        })
+        
+        function initJYTimesData(){
+        	//获取家医签约汇总和年度签约人次折线图的数据
+        	var param = new Object();
+			param.incomeType = "15";
+			param.orgCode = orgCode;
+			param.endTime = endTime;
+			param.startTime = $("#layYear").val();
+			$.ajax({
+		        type: 'POST',
+		        //async: false,
+		        url: roadPath + "/family/statssign/getJYTimesStats",
+		        dataType: 'json',
+		        contentType: 'application/json',
+		        data: JSON.stringify(param),
+		        error: function (XMLHttpRequest, textStatus, errorThrown) {
+		        	//debugger;
+		        },
+		        success: function (data) {
+					if(data.retCode == 0){
+						optionCookie(data.authorToke);
+			        	//初始化家医签约汇总
+			        	initTopShow(data.data.summary);
+			        	//初始化年度签约人次折线图
+			        	initLeftLineCharts(data.data.charts);
+					}
+		        },
+		        complete: function (XMLHttpRequest, textStatus) {
+		        }
+		    });
+        }
+        
+        //初始化家医签约汇总
+        function initTopShow(indicatorArr){
+        	//家医签约汇总
+        	for(var i = 0; i < indicatorArr.length; i++){
+        		$('#indicatorContainer'+i).append('<span>'+indicatorArr[i].name+'</span>');
+        		$('#inpatinetIncome'+i).append('<span>'+indicatorArr[i].value+'</span>');
+        	}
+        	
+        	let divparent = window.parent
+        	let urls = ''     
+        	function commonFun () {
+        		// 去除tab状态
+        		divparent.$('.tabUl .tabLi').removeClass('tabLiact')
+        		// 去除菜单栏样式
+        		divparent.$('.yiji-li>.menu-div').removeClass('menuact1')
+		        divparent.$('.erji-ul').stop().slideUp()
+		        divparent.$('.erji-li>.menu-div').removeClass('menuact2')
+        	}
+        	
+        	// 家医签约汇总跳转
+            $(".bgcontainer").on("click",".data1",function(){
+            	commonFun()
+            	urls = '../familysignmanage/signtimes.html'
+                window.parent.$('#mainPage').attr('src', urls)
+                let liurl = ''
+                for (let i = 0; i < divparent.$('.tabUl li').length; i++) {                	       
+                	liurl += divparent.$('.tabUl li').eq(i).attr('src')
+                	if (divparent.$('.tabUl li').eq(i).attr('src') == urls) {
+                		divparent.$('.tabUl li').eq(i).addClass('tabLiact')
+                	}
+                }                      
+            	if (liurl.indexOf(urls) < 0) {
+            		divparent.$('.tabUl').append(' <li class="tabLi tabLiact" his="' + urls + '" src="' + urls + '"><span>' +
+                    '年度家医签约人次统计</span><i class="qyhclose iconBtn"></i></li>')
+            	}
+                for (let i = 0; i < divparent.$('.erji-li .menu-div').length; i++) {
+		            let menuUrl = divparent.$('.erji-li .menu-div').eq(i).attr('src')	
+		            if (menuUrl == urls) {
+		            	divparent.$('.erji-li .menu-div').eq(i).addClass('menuact2')
+		            	divparent.$('.erji-li .menu-div').eq(i).attr('act','true')
+		                divparent.$('.erji-li .menu-div').eq(i).parents('.yiji-li').children('.menu-div').addClass('menuact1')
+		                divparent.$('.erji-li .menu-div').eq(i).parents('.yiji-li').children('.erji-ul').stop().slideDown()	 
+		            }	                              
+		        }
+            });
+        	
+            $(".bgcontainer").on("click",".data2",function(){
+            	commonFun()
+                urls = '../familysignmanage/signrecordtimes.html'
+                window.parent.$('#mainPage').attr('src', urls)
+                let liurl = ''
+                for (let i = 0; i < divparent.$('.tabUl li').length; i++) {                	       
+                	liurl += divparent.$('.tabUl li').eq(i).attr('src')
+                	if (divparent.$('.tabUl li').eq(i).attr('src') == urls) {
+                		divparent.$('.tabUl li').eq(i).addClass('tabLiact')
+                	}
+                }                      
+            	if (liurl.indexOf(urls) < 0) {
+            		divparent.$('.tabUl').append(' <li class="tabLi tabLiact" his="' + urls + '" src="' + urls + '"><span>' +
+                    '年度家医履约人次统计</span><i class="qyhclose iconBtn"></i></li>')
+            	}
+                for (let i = 0; i < divparent.$('.erji-li .menu-div').length; i++) {
+		            let menuUrl = divparent.$('.erji-li .menu-div').eq(i).attr('src')	
+		            if (menuUrl == urls) {
+		            	divparent.$('.erji-li .menu-div').eq(i).addClass('menuact2')
+		            	divparent.$('.erji-li .menu-div').eq(i).attr('act','true')
+		                divparent.$('.erji-li .menu-div').eq(i).parents('.yiji-li').children('.menu-div').addClass('menuact1')
+		                divparent.$('.erji-li .menu-div').eq(i).parents('.yiji-li').children('.erji-ul').stop().slideDown()	 
+		            }	                              
+		        }
+            });
+            
+            $(".bgcontainer").on("click",".data3",function(){
+                commonFun()
+                urls = '../familysignmanage/signrecordnum.html'
+                window.parent.$('#mainPage').attr('src', urls)
+                let liurl = ''
+                for (let i = 0; i < divparent.$('.tabUl li').length; i++) {                	       
+                	liurl += divparent.$('.tabUl li').eq(i).attr('src')
+                	if (divparent.$('.tabUl li').eq(i).attr('src') == urls) {
+                		divparent.$('.tabUl li').eq(i).addClass('tabLiact')
+                	}
+                }                      
+            	if (liurl.indexOf(urls) < 0) {
+            		divparent.$('.tabUl').append(' <li class="tabLi tabLiact" his="' + urls + '" src="' + urls + '"><span>' +
+                    '年度家医履约人数统计</span><i class="qyhclose iconBtn"></i></li>')
+            	}
+                for (let i = 0; i < divparent.$('.erji-li .menu-div').length; i++) {
+		            let menuUrl = divparent.$('.erji-li .menu-div').eq(i).attr('src')	
+		            if (menuUrl == urls) {
+		            	divparent.$('.erji-li .menu-div').eq(i).addClass('menuact2')
+		            	divparent.$('.erji-li .menu-div').eq(i).attr('act','true')
+		                divparent.$('.erji-li .menu-div').eq(i).parents('.yiji-li').children('.menu-div').addClass('menuact1')
+		                divparent.$('.erji-li .menu-div').eq(i).parents('.yiji-li').children('.erji-ul').stop().slideDown()	 
+		            }	                              
+		        }
+            });
+            
+            $(".bgcontainer").on("click",".data4",function(){
+            	commonFun()
+                urls = '../familysignmanage/unsigntimes.html'
+                window.parent.$('#mainPage').attr('src', urls)
+                let liurl = ''
+                for (let i = 0; i < divparent.$('.tabUl li').length; i++) {                	       
+                	liurl += divparent.$('.tabUl li').eq(i).attr('src')
+                	if (divparent.$('.tabUl li').eq(i).attr('src') == urls) {
+                		divparent.$('.tabUl li').eq(i).addClass('tabLiact')
+                	}
+                }                      
+            	if (liurl.indexOf(urls) < 0) {
+            		divparent.$('.tabUl').append(' <li class="tabLi tabLiact" his="' + urls + '" src="' + urls + '"><span>' +
+                    '年度家医解约人次统计</span><i class="qyhclose iconBtn"></i></li>')
+            	}
+                for (let i = 0; i < divparent.$('.erji-li .menu-div').length; i++) {
+		            let menuUrl = divparent.$('.erji-li .menu-div').eq(i).attr('src')	
+		            if (menuUrl == urls) {
+		            	divparent.$('.erji-li .menu-div').eq(i).addClass('menuact2')
+		            	divparent.$('.erji-li .menu-div').eq(i).attr('act','true')
+		                divparent.$('.erji-li .menu-div').eq(i).parents('.yiji-li').children('.menu-div').addClass('menuact1')
+		                divparent.$('.erji-li .menu-div').eq(i).parents('.yiji-li').children('.erji-ul').stop().slideDown()	 
+		            }	                              
+		        }
+            });
+        }
+        
+     	// 年度家医签约（折线）
+        function initLeftLineCharts(data){
+        	let myChart = echarts.init(document.getElementById('main'));
+            // 指定图表的配置项和数据
+            let option = {
+                tooltip: {
+                    trigger: 'axis'
+                },
+                legend: {
+                    data:['签约人次','履约人次','履约人数','解约人次'],
+                    itemWidth: 15,
+		            itemHeight: 15,
+                },
+                grid: {
+                    top: '40px',
+                    left: '0',
+                    right: '35px',
+                    bottom: '20px',
+                    containLabel: true
+                },
+                xAxis: {
+                    type: 'category',
+                    // 去掉x轴刻度线往下的延伸
+                    axisTick: {
+                        show: false
+                    },
+                    boundaryGap: false,
+                    data: data.xList,
+                    axisLine: {
+                        lineStyle: {
+                            type: 'solid',
+                            color: '#eee',//左边线的颜色
+                            width:'1'//坐标线的宽度
+                        }
+                    },
+                    axisLabel: {
+                        show: true,
+                        textStyle: {
+                            color: '#7c7c7c'
+                        }
+                    }
+                },
+                yAxis: {
+                    type: 'value',
+                    axisLine: {
+                        lineStyle: {
+                            type: 'solid',
+                            color: 'none',//左边线的颜色
+                            width:'1'//坐标线的宽度
+                        }
+                    },
+                    splitLine: {
+                        lineStyle: {
+                            color: ['#EDEDF5']
+                        }
+                    }
+                },
+                series: [
+                    {
+                        name:'签约人次',
+                        type:'line',
+                        symbol: 'circle',//折线点设置为实心点
+                        symbolSize: 6,   //折线点的大小
+                        itemStyle: {
+                            normal: {
+                                color: "#45CCFB",//折线点的颜色
+                                lineStyle: {
+                                    color: "#45CCFB"//折线的颜色
+                                }
+                            }
+                        },
+                        data: data.y1List
+                    },
+                    {
+                        name:'履约人次',
+                        type:'line',
+                        symbol: 'circle',//折线点设置为实心点
+                        symbolSize: 6,   //折线点的大小
+                        itemStyle: {
+                            normal: {
+                                color: "#F7519F",//折线点的颜色
+                                lineStyle: {
+                                    color: "#F7519F"//折线的颜色
+                                }
+                            }
+                        },
+                        data: data.y2List
+                    },
+                    {
+                        name:'履约人数',
+                        type:'line',
+                        symbol: 'circle',//折线点设置为实心点
+                        symbolSize: 6,   //折线点的大小
+                        itemStyle: {
+                            normal: {
+                                color: "#FE8E25",//折线点的颜色
+                                lineStyle: {
+                                    color: "#FE8E25"//折线的颜色
+                                }
+                            }
+                        },
+                        data: data.y3List
+                    },
+                    {
+                        name:'解约人次',
+                        type:'line',
+                        symbol: 'circle',//折线点设置为实心点
+                        symbolSize: 6,   //折线点的大小
+                        itemStyle: {
+                            normal: {
+                                color: "#7666FC",//折线点的颜色
+                                lineStyle: {
+                                    color: "#7666FC"//折线的颜色
+                                }
+                            }
+                        },
+                        data: data.y4List
+                    },
+                ]
+            };
+        	// 使用刚指定的配置项和数据显示图表。
+            myChart.setOption(option);
+            // 页面切换刷新折线图数据
+            window.addEventListener('resize',function() {
+                // resizeWorldMapContainer()
+                myChart.resize();
+            })
+        }
+        
+     	//各县区月家医签约排行
+        function initJYAreaRank(){
+        	var param = new Object();
+			param.incomeType = "15";
+			param.orgCode = orgCode;
+			param.endTime = endTime;
+			param.startTime = $("#layYear").val();
+			$.ajax({
+		        type: 'POST',
+		        //async: false,
+		        url: roadPath + "/family/statssign/getQXJYTimesStats",
+		        dataType: 'json',
+		        contentType: 'application/json',
+		        data: JSON.stringify(param),
+		        error: function (XMLHttpRequest, textStatus, errorThrown) {
+		        	//debugger;
+		        },
+		        success: function (data) {
+					if(data.retCode == 0){
+						optionCookie(data.authorToke);
+						data = data.data;
+						$("#income").html("");
+			        	$("#monthIncomeTile").html("各县区上月签约人次排行");
+			        	var str = '';
+			        	for(var i = 1; i <= data.length; i++){
+			        		var sign = 'top';
+			        		if(data[i-1].value1 < 0){
+			        			sign = 'down';
+			        		}
+			        		str += '<li><span class="ranking">' + i + 
+			        				'</span><a href="#" onclick="initVillageIncome('+data[i-1].orgCode+');">' + data[i-1].name +
+			        				'</a><span class="rankingData">' + data[i-1].value + '<i class="qyhjiantou2 ' + sign + '"></i></span></li>'
+			        	}
+			        	$("#income").append(str);
+			        	// 前3名高亮样式
+			            $("#income li:lt(3)").find('.ranking').addClass("top3");
+					}
+		        },
+		        complete: function (XMLHttpRequest, textStatus) {
+		        }
+		    });
+        }
+     	function initVillageIncome(orgCode){
+     		var date = new Date;
+     		var y = date.getFullYear();
+     		var m = date.getMonth();
+     		if(m == 0){
+     			m = 12;
+     			y = y - 1;
+     		}else{
+     			m = m < 10 ? '0' + m : m;
+     		}
+     		window.parent.$('#mainPage').attr('src', '../familysignmanage/signtimes.html?orgCode='+orgCode+'&endTime='+(y+m))
+     	}
+    </script>
+</body>
+</html>

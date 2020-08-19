@@ -1,0 +1,527 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>体检统计</title>
+<link rel="stylesheet" href="/static/css/publicCss.css">
+    <link rel="stylesheet" href="/static/tools/layui/css/layui.css"  media="all">
+    <link rel="stylesheet" href="/static/css/statsmanage/operationStyle.css">
+    <link rel="stylesheet" href="/static/css/basemanage/sysmenu.css">
+    <script src="/static/js/publicJs.js"></script>
+    <script type="text/javascript" src="/static/js/common/echarts.min.js"></script>
+    <script src="/static/tools/layui/layui.all.js"></script>
+</head>
+<body>
+    <div class="animated fadeInRight">
+		<div class="unitContainerdate">
+	         <div class="layui-form">
+	             <div class="layui-form-item">
+	                 <div class="layui-inline" style="float:left;">
+	                     <label class="layui-form-label date-form-label">当前年份</label>
+	                     <div class="layui-input-inline">
+	                         <input type="text" class="layui-input" id="layYear" >
+	                         <div class="layuiDates">
+	                             <i class="iconfont qyhicon_date" style="color:#E3E4E8;"></i>
+	                         </div>
+	                     </div>
+	                 </div>
+	                 <div class="form-item" style="margin: 0 0 0 20px;">
+	                 <input type="button" class="search" id="searchBtn" value="查询">
+	              </div>
+	             </div>
+	         </div>
+	     </div>
+	     
+	       <div class="unitContainer">
+	        <h4>体检情况统计</h4>
+	        <div id="checkCharts" style="width: 100%;height:320px;"></div>
+	        <span class="unit">单位：<i class="fontColor">人</i></span>
+	      </div>
+	    	
+	    	<ul class="clearfix">
+	        <li class="col-md-6" style="padding: 0 10px 0 0;">
+	            <div class="unitContainer" style="padding-bottom:0;">
+	                <h4>人群分类&占比</h4>
+	                <div id="rqflClassCharts" style="width: 100%;height:460px;"></div>
+	            </div>
+	        </li>
+	        <li class="col-md-6" style="padding: 0 0 0 10px;">
+	            <div class="unitContainer" style="padding-bottom:0;">
+	                <h4>年龄段&占比</h4>
+	                <div id="nldCharts" style="width: 100%;height:460px;"></div>
+	            </div>
+	        </li>
+	    </ul>
+	    
+	  </div>
+</body>
+<script type="text/javascript">
+var orgCode = '';
+var endTime = '';
+$(function () {
+	//时间插件
+	layui.use('laydate', function(){
+        var laydate = layui.laydate;
+        //日期范围
+        laydate.render({
+            elem: '#layYear',
+            theme: '#0C95FF',
+            type : 'year',
+            value: new Date(),
+            btns: ['now', 'confirm']
+        });
+        
+        refreshCharts();
+    });
+	
+})
+
+	$("#searchBtn").click(function(){
+		refreshCharts();
+	})
+	
+	//刷新页面上三个charts
+	function refreshCharts(){
+		initTopLineStats();
+		initLeftPieStats();
+		initRightPieStats();
+	}
+		
+	 var checkCharts;
+	 function initTopLineStats(){
+	      	var param = new Object();
+	    	param.incomeType = "11";
+	    	param.orgCode = orgCode;
+	    	param.endTime = endTime;
+	    	param.startTime = $("#layYear").val();
+	    	$.ajax({
+	            type: 'POST',
+	            //async: false,
+	            url: roadPath + "/family/commonstats/getTQLineCharts",
+	            dataType: 'json',
+	            contentType: 'application/json',
+	            data: JSON.stringify(param),
+	            error: function (XMLHttpRequest, textStatus, errorThrown) {
+	            	//debugger;
+	            },
+	            success: function (data) {
+	    			if(data.retCode == 0){
+	    				optionCookie(data.authorToke);
+	    				data = data.data;
+	    				
+	    				// 建档情况统计表
+	    		      	if(checkCharts != undefined){
+	    		      		checkCharts.dispose();
+	    		      	}
+	    		      	checkCharts = echarts.init(document.getElementById('checkCharts'));
+    		 			// 指定图表的配置项和数据
+    		 		    let medicatchargeoption = {
+    		 		        tooltip: {
+    		 		            trigger: 'axis',
+    		 		        },
+    		 		        legend: {
+    		 		            data:['当前'],
+    		 		            itemGap: 26,
+    		 		        },
+    		 		        grid: {
+    		 		            top: '40px',
+    		 		            left: '0',
+    		 		            right: '20px',
+    		 		            bottom: '0',
+    		 		            containLabel: true
+    		 		        },
+    		 		        xAxis: {
+    		 		            type: 'category',
+    		 		            // 去掉x轴刻度线往下的延伸
+    		 		            axisTick: {
+    		 		                show: false
+    		 		            },
+    		 		            boundaryGap: false,
+    		 		            data: data.xList,
+    		 		            axisLine: {
+    		 		                lineStyle: {
+    		 		                    type: 'solid',
+    		 		                    color: '#eee',//左边线的颜色
+    		 		                    width:'1'//坐标线的宽度
+    		 		                }
+    		 		            },
+    		 		            axisLabel: {
+    		 		                show: true,
+    		 		                textStyle: {
+    		 		                    color: '#7c7c7c'
+    		 		                }
+    		 		            }
+    		 		        },
+    		 		        yAxis: {
+    		 		            type: 'value',
+    		 		            axisLine: {
+    		 		                lineStyle: {
+    		 		                    type: 'solid',
+    		 		                    color: 'none',//左边线的颜色
+    		 		                    width:'1'//坐标线的宽度
+    		 		                }
+    		 		            },
+    		 		            splitLine: {
+    		 		                    lineStyle: {
+    		 		                        color: ['#EDEDF5']
+    		 		                    }
+    		 		                }
+    		 		        },
+    		 		        series: [
+    		 		            {
+    		 		                name:'当前',
+    		 		                type:'line',
+    		 		                symbol: 'circle',//折线点设置为实心点
+    		 		                symbolSize: 1,   //折线点的大小
+    		 		                itemStyle: {
+    		 		                    normal: {
+    		 		                        color: "#45CCFB",//折线点的颜色
+    		 		                        lineStyle: {
+    		 		                            color: "#45CCFB"//折线的颜色
+    		 		                        }
+    		 		                    }
+    		 		                },
+    		 		                areaStyle: {
+    		 		                    normal: {
+    		 		                        color: new echarts.graphic.LinearGradient(
+    		 		                            0, 0, 0, 1,
+    		 		                            [
+    		 		                                {offset: 0, color: '#81befd'},
+    		 		                                {offset: 1, color: '#fff'}
+    		 		                            ]
+    		 		                        )
+    		 		                    }
+    		 		                },
+    		 		                data: data.y1List
+    		 		            }
+    		 		        ]
+    		 		    };
+    		 		
+    		 			// 使用刚指定的配置项和数据显示图表。
+    		 		    checkCharts.setOption(medicatchargeoption);
+    		 		    // 页面切换刷新折线图数据
+    		 		    window.addEventListener('resize',function() {
+    		 		    	checkCharts.resize();
+    		 		    })
+	    			}
+	            },
+	            complete: function (XMLHttpRequest, textStatus) {
+	            }
+	        });
+	      }
+	      
+	      var rqflClassCharts;
+	      function initLeftPieStats(){
+		      	var param = new Object();
+		      	//incomeType 1101：体检分类 1102：不同年龄段分类
+		    	param.incomeType = "1101";
+		    	param.orgCode = orgCode;
+		    	param.endTime = endTime;
+		    	param.startTime = $("#layYear").val();
+		    	$.ajax({
+		            type: 'POST',
+		            //async: false,
+		            url: roadPath + "/family/commonstats/getOperManageChartsData",
+		            dataType: 'json',
+		            contentType: 'application/json',
+		            data: JSON.stringify(param),
+		            error: function (XMLHttpRequest, textStatus, errorThrown) {
+		            	//debugger;
+		            },
+		            success: function (data) {
+		    			if(data.retCode == 0){
+		    				optionCookie(data.authorToke);
+		    				data = data.data;
+		    				
+		    				pieData = data.pie;
+	        				let legendArr = [];
+							let dataArr = [];
+							for(let i = 0; i < pieData.length; i++){
+								if(pieData[i].value > 0){
+									dataArr.push(pieData[i]);
+								}else{
+									pieData[i].value = null;
+									dataArr.push(pieData[i]);
+								}
+								legendArr.push(pieData[i].name);
+							}
+		    				
+		    				if(rqflClassCharts != undefined){
+		    		      		rqflClassCharts.dispose();
+		    		      	}
+		    		      	rqflClassCharts = echarts.init(document.getElementById('rqflClassCharts'));
+		    		          let colors = ['#45CCFB', '#0FE0C0', '#FE67F4', '#A683EA', '#A3DF87', '#F66262',
+		    		              '#FCB867', '#7767FD', '#0BCE0F', '#FE8F24','#CB75FE', '#F750A0']
+		    		      	  // 指定图表的配置项和数据
+		    		          let zwclassoption = {
+		    		              tooltip: {
+		    		                  show:false,
+		    		                  trigger: 'item',
+		    		                  formatter: "{a} <br/>{b}: {c} ({d}%)"
+		    		              },
+		    		              legend:{
+		        			        	orient: 'vertical',
+		        			            x: 'left',
+		        			            y: 'center',
+		        			            data: legendArr,
+		        			        	itemWidth: 15,
+		        			            itemHeight: 15
+		        			        },
+		    		              grid: {
+		    		                  top: '0',
+		    		                  left: '0',
+		    		                  right: '0',
+		    		                  bottom: '0',
+		    		                  containLabel: true
+		    		              },
+		    		              color: colors,
+		    		              series: [
+		    		                  {
+		    		                      name:'',
+		    		                      type:'pie',
+		    		                      radius: ['52%', '66%'],
+		    		                      avoidLabelOverlap: true,   //是否启用防止标签重叠策略
+		    		                      label: {
+		    		                          normal: {
+		    		                              show: true,
+		    		                              position: 'center',
+		    		                              formatter:function (argument) {
+		    		                                  let html;
+		    		                                  html = data.sum;
+		    		                                  return html;
+		    		                              },
+		    		                              textStyle:{
+		    		                                  fontSize: 32,
+		    		                                  color:'#252525'
+		    		                              }
+		    		                          },
+		    		                      },
+		    		                      labelLine: {
+		    		                          normal: {
+		    		                              show: false
+		    		                          }
+		    		                      },
+		    		                      data: dataArr,
+		    		                      itemStyle:{
+		    		                          normal: {
+		    		                              borderWidth: 1,
+		    		                              borderColor: '#fff',
+		    		                          }
+		    		                      }
+		    		                  }, {
+		    		                      type:'pie',
+		    		                      radius: ['52%', '66%'],
+		    		                      avoidLabelOverlap: true,   //是否启用防止标签重叠策略
+		    		                      label: {
+		    		                          normal: {
+		    		                              show: true,
+		    		                              position: 'outside',
+		    		                              formatter: '{b|{b}  }{c}',
+		    		                              rich: {
+		    		                                  b: {
+		    		                                      color: '#A9A7A8',
+		    		                                      fontSize: 14,
+		    		                                      lineHeight: 18
+		    		                                  },
+		    		                              }
+		    		                          },
+		    		                          emphasis: {
+		    		                              show: true,
+		    		                              textStyle: {
+		    		                                  fontSize: '28',
+		    		                                  fontWeight: 'bold'
+		    		                              },
+		    		                              borderRadius: 4,
+		    		                              padding:10
+		    		                          }
+		    		                      },
+		    		                      labelLine: {
+		    		                          normal: {
+		    		                              show: true,//控制线条显示
+		    		                              length: 20,
+		    		                              length2: 30,
+		    		                              lineStyle: {
+		    		                                  color: '#A9A7A8'
+		    		                              }
+		    		                          }
+		    		                      },
+		    		                      data: dataArr,
+		    		                      itemStyle: {
+		    		                          normal: {
+		    		                              borderWidth: 1,
+		    		                              borderColor: '#fff',
+		    		                          },
+		    		                      }
+		    		                  }
+		    		              ]
+		    		          };
+		    		      	  // 使用刚指定的配置项和数据显示图表。
+		    		          rqflClassCharts.setOption(zwclassoption);
+		    		          rqflClassCharts.on('click', function (params) { 
+		    		          	window.parent.$('#mainPage').attr('src', '../pubhealthmanage/checkRQFLDetail.html?endTime='+$("#layYear").val());
+		    		    	  });
+		    			}
+		            },
+		            complete: function (XMLHttpRequest, textStatus) {
+		            }
+		        });
+	      }
+	      
+	      var nldCharts;
+	      function initRightPieStats(){
+	    	    var param = new Object();
+	    		param.incomeType = "1102";
+	    		param.orgCode = orgCode;
+	    		param.endTime = endTime;
+	    		param.startTime = $("#layYear").val();
+	    		$.ajax({
+	    	        type: 'POST',
+	    	        async: false,
+	    	        url: roadPath + "/family/commonstats/getOperManageChartsData",
+	    	        dataType: 'json',
+	    	        contentType: 'application/json',
+	    	        data: JSON.stringify(param),
+	    	        error: function (XMLHttpRequest, textStatus, errorThrown) {
+	    	        	//debugger;
+	    	        },
+	    	        success: function (data) {
+	    				if(data.retCode == 0){
+	    					optionCookie(data.authorToke);
+	    					data = data.data;
+	    					
+	    					pieData = data.pie;
+	        				let legendArr = [];
+							let dataArr = [];
+							for(let i = 0; i < pieData.length; i++){
+								if(pieData[i].value > 0){
+									dataArr.push(pieData[i]);
+								}else{
+									pieData[i].value = null;
+									dataArr.push(pieData[i]);
+								}
+								legendArr.push(pieData[i].name);
+							}
+	    					
+	    					if(nldCharts != undefined){
+	    			      		nldCharts.dispose();
+	    			      	}
+	    			      	nldCharts = echarts.init(document.getElementById('nldCharts'));
+	    			        let colors = ['#45CCFB', '#0FE0C0', '#FE67F4', '#A683EA', '#A3DF87', '#F66262',
+	    			              '#FCB867', '#7767FD', '#0BCE0F', '#FE8F24','#CB75FE', '#F750A0']
+	    			      	  // 指定图表的配置项和数据
+	    			          let archiveoption = {
+	    			              tooltip: {
+	    			                  show:false,
+	    			                  trigger: 'item',
+	    			                  formatter: "{a} <br/>{b}: {c} ({d}%)"
+	    			              },
+	    			              legend:{
+										orient: 'vertical',
+										x: 'left',
+										y: 'center',
+										data: legendArr,
+										itemWidth: 15,
+										itemHeight: 15
+		          			      },
+	    			              grid: {
+	    			                  top: '0',
+	    			                  left: '0',
+	    			                  right: '0',
+	    			                  bottom: '0',
+	    			                  containLabel: true
+	    			              },
+	    			              color: colors,
+	    			              series: [
+	    			                  {
+	    			                      name:'',
+	    			                      type:'pie',
+	    			                      radius: ['52%', '66%'],
+	    			                      avoidLabelOverlap: true,   //是否启用防止标签重叠策略
+	    			                      label: {
+	    			                          normal: {
+	    			                              show: true,
+	    			                              position: 'center',
+	    			                              formatter:function (argument) {
+	    			                                  let html;
+	    			                                  html = data.sum;
+	    			                                  return html;
+	    			                              },
+	    			                              textStyle:{
+	    			                                  fontSize: 32,
+	    			                                  color:'#252525'
+	    			                              }
+	    			                          },
+	    			                      },
+	    			                      labelLine: {
+	    			                          normal: {
+	    			                              show: false
+	    			                          }
+	    			                      },
+	    			                      data: dataArr,
+	    			                      itemStyle:{
+	    			                          normal: {
+	    			                              borderWidth: 1,
+	    			                              borderColor: '#fff',
+	    			                          }
+	    			                      }
+	    			                  }, {
+	    			                      type:'pie',
+	    			                      radius: ['52%', '66%'],
+	    			                      avoidLabelOverlap: true,   //是否启用防止标签重叠策略
+	    			                      label: {
+	    			                          normal: {
+	    			                              show: true,
+	    			                              position: 'outside',
+	    			                              formatter: '{b|{b}  }{c}',
+	    			                              rich: {
+	    			                                  b: {
+	    			                                      color: '#A9A7A8',
+	    			                                      fontSize: 14,
+	    			                                      lineHeight: 18
+	    			                                  },
+	    			                              }
+	    			                          },
+	    			                          emphasis: {
+	    			                              show: true,
+	    			                              textStyle: {
+	    			                                  fontSize: '28',
+	    			                                  fontWeight: 'bold'
+	    			                              },
+	    			                              borderRadius: 4,
+	    			                              padding:10
+	    			                          }
+	    			                      },
+	    			                      labelLine: {
+	    			                          normal: {
+	    			                              show: true,//控制线条显示
+	    			                              length: 20,
+	    			                              length2: 30,
+	    			                              lineStyle: {
+	    			                                  color: '#A9A7A8'
+	    			                              }
+	    			                          }
+	    			                      },
+	    			                      data: dataArr,
+	    			                      itemStyle: {
+	    			                          normal: {
+	    			                              borderWidth: 1,
+	    			                              borderColor: '#fff',
+	    			                          },
+	    			                      }
+	    			                  }
+	    			              ]
+	    			          };
+	    			      	  // 使用刚指定的配置项和数据显示图表。
+	    			          nldCharts.setOption(archiveoption);
+	    			          nldCharts.on('click', function (params) { 
+		    			          window.parent.$('#mainPage').attr('src', '../pubhealthmanage/checkNLDDetail.html?endTime='+$("#layYear").val());
+		    			      });
+	    				 }
+	    	        },
+	    	        complete: function (XMLHttpRequest, textStatus) {
+	    	        }
+	    	});
+	 }
+</script>
+</html>

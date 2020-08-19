@@ -1,0 +1,99 @@
+html,body {
+    width: 100%;height: 100%;
+    padding: 0;margin: 0; overflow: hidden;
+}
+.loginBox {
+    width: 100%;height: 100%;
+    background: url("../img/login/qyxxh_loginbg.png") center no-repeat;
+    background-size: 100% 100%;
+    position: relative;
+}
+.loginCard {
+    width: 80%;height: 80%; border-radius: 20px;
+    background: url('../img/login/qyxxh_login_img1.png') no-repeat 145px center, url('../img/login/login_bg.png') no-repeat fixed center;
+    background-size: 40% 82%,  100% 100%;
+    position: absolute; top: 10%; left: 10%;
+}
+.decorateImg {
+    height: 30%; width: auto;
+    position: absolute;
+    bottom: 0; left: 0;
+    -webkit-transform: translate(-25%, 10%);
+    -moz-transform: translate(-25%, 10%);
+    -ms-transform: translate(-25%, 10%);
+    -o-transform: translate(-25%, 10%);
+    transform: translate(-25%, 10%);
+}
+.loginForm {
+    width: 40%; height: 100%;
+    float: right; position: relative;
+    /*background: rgba(255,0,0,0.5);*/
+}
+.formTit1 {
+    margin: 13.7vh 0 1.6vh 0;
+    color: #085BC1; font-size: 2.18vw;
+}
+.formTit2 {
+    margin-bottom: 6vh;
+    color: #085BC1; font-size: 1.35vw;
+}
+.inpbox {
+	position:relative;
+}
+.myLabel {
+	color: #636567; position:absolute;
+	font-size: 0.62vw; top:-1.24vw;
+	display: none;
+}
+.user,.pass {
+    font-size: 0.83vw; text-indent: 5px;
+    width: 70%; height: 3.5vh;
+    color: #085BC1; background: none;
+    border: none; outline: none;
+    border-bottom: #275BBA 1px solid; margin-bottom: 4vh;
+}
+.user {}
+.pass {
+	font-size: 1.14vw; letter-spacing: 0.1em;
+}
+.idcodeBox {
+	width: 70%; height: 3.5vh;
+	margin-bottom: 4vh;
+}
+.icode {
+	font-size: 0.83vw; text-indent: 5px;
+    width: 70%; height: 3.5vh;
+    color: #085BC1; background: none;
+    border: none; outline: none;
+    border-bottom: #275BBA 1px solid;
+    display: inline-block;
+}
+#idcode {
+	float:right;
+	width: 25%; height: 3.5vh; 
+	line-height: 3.5vh; text-align: center;
+}
+.loginBtn {
+    width: 50%; height: 6vh; border-radius: 6px; color: #FBFBFB;
+    font-size: 0.93vw; margin-left: 5%;
+    background: -moz-linear-gradient(300deg, #57B6FE, #0C95FE);
+    background: -webkit-gradient(linear, 0% 0%, 100% 100%, from(#57B6FE), to(#0C95FE));
+    background: -webkit-linear-gradient(300deg, #57B6FE, #0C95FE);
+    background: -o-linear-gradient(300deg, #57B6FE, #0C95FE);
+    border: none; outline: none;
+}
+input::-webkit-input-placeholder { /* WebKit browsers */
+    color: #ADB0B3;font-size: 0.72vw;letter-spacing: 0;
+}
+input:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+    color: #ADB0B3;font-size: 0.72vw;letter-spacing: 0;
+}
+input::-moz-placeholder { /* Mozilla Firefox 19+ */
+    color: #ADB0B3;font-size: 0.72vw;letter-spacing: 0;
+}
+input:-ms-input-placeholder { /* Internet Explorer 10+ */
+    color: #ADB0B3;font-size: 0.72vw;letter-spacing: 0;
+}
+.formRemark {
+    color: #636567; position: absolute; bottom: 20px; left: 10%;
+}

@@ -1,0 +1,530 @@
+<!--检验检查总收入-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>检验检查总收入</title>
+    <link rel="stylesheet" href="/static/tools/layui/css/layui.css"  media="all">
+    <link rel="stylesheet" href="/static/css/publicCss.css">
+    <link rel="stylesheet" href="/static/css/basemanage/sysmenu.css">
+    <link rel="stylesheet" href="/static/css/statsmanage/operationStyle.css">
+    <link rel="stylesheet" href="/static/css/common/tablegridcharts.css">
+    <script src="/static/js/publicJs.js"></script>
+    <script type="text/javascript" src="/static/js/common/echarts.min.js"></script>
+    <script src="/static/tools/layui/layui.all.js"></script>
+</head>
+<body>
+    <div class="animated fadeInRight">
+	    <div class="containers">
+	    	<div class="unitContainer" styel="height:80px;">
+	            <div class="layui-form">
+	                <div class="layui-form-item">
+	                    <div class="layui-inline" style="float:left;">
+	                        <label class="layui-form-label">当前年份</label>
+	                        <div class="layui-input-inline">
+	                            <input type="text" class="layui-input" id="layYear" >
+	                            <div class="layuiDates">
+	                                <i class="iconfont qyhicon_date" style="color:#E3E4E8;"></i>
+	                            </div>
+	                        </div>
+	                    </div>
+	                    <div class="layui-inline" style="float:left;">
+	                        <label class="layui-form-label">当前月份</label>
+	                        <div class="layui-input-inline"  style="width: 90px;">
+			                        <select id="layMother" class="layui-input">
+	                                	<option value="13">全部</option>
+	                                	<option value="01">1月</option>
+	                                	<option value="02">2月</option>
+	                                	<option value="03">3月</option>
+	                                	<option value="04">4月</option>
+	                                	<option value="05">5月</option>
+	                                	<option value="06">6月</option>
+	                                	<option value="07">7月</option>
+	                                	<option value="08">8月</option>
+	                                	<option value="09">9月</option>
+	                                	<option value="10">10月</option>
+	                                	<option value="11">11月</option>
+	                                	<option value="12">12月</option>
+	                                </select>
+		                      </div>
+	                    </div>
+	                    <div class="form-item" style="margin: 0 0 0 20px;">
+		                   <input type="button" class="search" id="searchBtn" value="查询">
+		                </div>
+	                </div>
+	            </div>
+	            <div class="clearfix">
+	                <div class="dicBox-table" >
+	                    <div class="tableBox" style="border:none;margin-top:15px;">
+	                    	<table id="dataGrid" style="border:none"></table>
+	                    </div>
+	                </div>
+	            </div>
+	        </div>
+	        <div class="unitContainer" >
+	            <h4>检验检查总收入</h4>
+	            <div id="censorCharts" style="width: 100%;height:367px;"> </div>
+	        </div>
+	        <div class="unitContainer">
+	            <h4 id="doughnutTitle">检验检查总收入占比</h4>
+	            <ul class="doughnut clearfix">
+	                <li class="" style="width: 100%;">
+	                    <div id="doughnutCharts" style="width: 100%;height:414px;"></div>
+	                </li>
+	            </ul>
+	        </div>
+	    </div>
+	</div>
+    <script type="text/javascript">
+	    var orgCode = '';
+		var endTime = '';
+        $(function(){
+        	orgCode = $.util.getUrlParam('orgCode');
+        	endTime = $.util.getUrlParam('endTime');
+        	if(endTime != null){
+        		currmonth = endTime.substr(4);
+        		if(currmonth != ''){
+        			currmonth = currmonth == '13' ? '全部' : currmonth;
+            		$("#layMother option[value='"+currmonth+"']").prop("selected",true);
+            	}
+        	}
+        	//时间插件
+        	layui.use('laydate', function(){
+                var laydate = layui.laydate;
+                //日期范围
+                laydate.render({
+                    elem: '#layYear',
+                    theme: '#0C95FF',
+                    type : 'year',
+                    value: new Date(),
+                    btns: ['now', 'confirm']
+                });
+            });
+        	layui.use('form', function(){  //此段代码必不可少
+                var form = layui.form;
+                form.render();
+            });
+          	//初始化table
+        	gridInit();
+          	
+        	//查询按钮
+        	$("#searchBtn").click(function(){
+                $('#dataGrid').bootstrapTable('refresh');
+            });
+        });
+        
+      //初始化table
+    	var gridTableUrl = roadPath + '/family/statsmedicant/getJGLBSRCharges';
+    	function gridInit(){
+   	        $('#dataGrid').bootstrapTable({
+   	            url: gridTableUrl,//请求后台的URL（*）
+   	            method: 'post',                      //请求方式（*）
+   	            striped: true,                      //是否显示行间隔色
+   	            cache: false,                       //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
+   	            pagination: true,                   //是否显示分页（*）
+   	            sortable: false,                     //是否启用排序
+   	            sortOrder: "asc",                   //排序方式
+   	            queryParams: queryParams,  //传递参数（*）
+   	            sidePagination: "server",           //分页方式：client客户端分页，server服务端分页（*）
+   	            pageNumber:1,                       //初始化加载第一页，默认第一页
+   	            pageSize: 10,                       //每页的记录行数（*）
+   	            pageList: [10, 20, 50, 100, 200],   //可供选择的每页的行数（*）
+   	            columns: [ {
+   	                field: 'orgCode',
+   	                align : 'center',
+   	                title: '机构编码'
+   	            }, {
+   	                field: 'name',
+   	                align : 'center',
+   	                title: '机构名称'
+   	            }, {
+   	                field: 'value',
+   	                align : 'center',
+   	                title: '检查检验'
+   	            }, {
+                   	field: '', title: '详情',
+                   	align : 'center',
+                   	formatter:function(value,row,index){
+                   		if(row.orgLevel != '5'){
+                   			return '<i onclick="refreshDataGrig('+row.orgCode+', '+endTime+');" class="qyhxiangqing tableDetail" style="margin-left: 22px;"></i>';
+                   		}else{
+                   			return '';
+                   		}
+                   	}
+                }],
+                onClickRow:function (row, $element) {
+                    $('.info').removeClass('info');//移除class
+                    $($element).addClass('info');//添加class
+					//检验总收入占比的标题
+					$("#doughnutTitle").html("检验检查总收入占比("+row.name+")");
+					endTime = $("#layYear").val()+($("#layMother").val() == '13' ? '' : $("#layMother").val());
+					//初始化中间的charts
+		            initMidReport(row.orgCode);
+		            //初始化下边的charts
+		            initBottomReport(row.orgCode);
+  				},
+  				onLoadSuccess:function(data){
+  					//加载完成，默认点击第一行
+  					if(data.data.list != null && data.data.list.length > 0){
+  						this.onClickRow(data.data.list[0], $("#dataGrid tbody tr")[0]);
+  					}
+  				}
+   	        });
+   	    };
+   	
+   	 	function refreshDataGrig(pitchOrgCode, pitchEndTime){
+	    	orgCode = pitchOrgCode;
+	    	endTime = pitchEndTime;
+	    	$('#dataGrid').bootstrapTable('refresh');
+	    }
+   	    
+   	    //得到查询的参数
+   	    function queryParams(params) {
+   	        var temp = {   //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
+   	        	pageSize: params.limit,   //页面大小
+   	            pageNum: params.offset/params.limit + 1,  //页码
+   	            startTime : $("#layYear").val()+($("#layMother").val() == '13' ? '' : $("#layMother").val()),
+   	            incomeType : '0103',
+   	         	endTime : $("#layYear").val()+($("#layMother").val() == '13' ? '' : $("#layMother").val()),
+   	            orgCode : orgCode
+   	        };
+   	        return temp;
+   	    };
+   	    
+      	//初始化中间的charts
+      	var getSumFlg = false;
+      	var getMonFlg = false;
+      	var sumLineData = [];
+      	var monBarDate = [];
+        function initMidReport(pitchOrgCode){
+        	getSumData(pitchOrgCode);
+        	getMonData(pitchOrgCode);
+      	};
+        
+      	//获取总数的折线图的数据
+      	function getSumData(pitchOrgCode){
+      		var param = new Object();
+			param.incomeType = "01";
+			param.orgCode = pitchOrgCode;
+			param.endTime = endTime;
+			param.startTime = $("#layYear").val();
+			$.ajax({
+		        type: 'POST',
+		        //async: false,
+		        url: roadPath + "/family/statsmedicant/getYLChargeStats",
+		        dataType: 'json',
+		        contentType: 'application/json',
+		        data: JSON.stringify(param),
+		        error: function (XMLHttpRequest, textStatus, errorThrown) {
+		        	//debugger;
+		        },
+		        success: function (data) {
+					if(data.retCode == 0){
+						optionCookie(data.authorToke);
+						sumLineData = data.data;
+						getSumFlg = true;
+						if(getSumFlg && getMonFlg){
+							initMidCharts(sumLineData, monBarDate);
+						}
+					}
+		        },
+		        complete: function (XMLHttpRequest, textStatus) {
+		        }
+		    });
+      	}
+      	
+        //获取每月的柱状图的数据
+      	function getMonData(pitchOrgCode){
+      		var param = new Object();
+      		//incomeType 医疗收入中各类别 0101.住院 0102.门诊 0103.检查 0104.手术 0105.总收入
+			param.incomeType = "0103";
+			param.orgCode = pitchOrgCode;
+			param.endTime = endTime;
+			param.startTime = $("#layYear").val();
+			$.ajax({
+		        type: 'POST',
+		        //async: false,
+		        url: roadPath + "/family/statsmedicant/getYLItemChargeStats",
+		        dataType: 'json',
+		        contentType: 'application/json',
+		        data: JSON.stringify(param),
+		        error: function (XMLHttpRequest, textStatus, errorThrown) {
+		        	//debugger;
+		        },
+		        success: function (data) {
+					if(data.retCode == 0){
+						optionCookie(data.authorToke);
+						monBarDate = data.data;
+						getMonFlg = true;
+						if(getSumFlg && getMonFlg){
+							initMidCharts(sumLineData, monBarDate);
+						}
+					}
+		        },
+		        complete: function (XMLHttpRequest, textStatus) {
+		        }
+		    });
+      	}
+      	
+        var censorCharts;
+        // 检验检查总收入(折线图和柱状图组合)
+		function initMidCharts(data, barData){
+        	if(censorCharts != undefined){
+        		censorCharts.dispose();
+        	}
+        	censorCharts = echarts.init(document.getElementById('censorCharts'));
+			// 指定图表的配置项和数据
+		    let totaloption = {
+		        tooltip : {
+		            trigger: 'axis',
+		                axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+		                type : 'shadow' // 默认为直线，可选为：'line' | 'shadow'
+		            }
+		        },
+		        toolbox: {
+		            feature: {
+		            	dataView:{
+		                    show: true,
+		                    title: '',
+		                    readOnly:false,
+		                    optionToContent: function(opt) {
+		                        var typeName = "月份";
+		                        var dataview = opt.toolbox[0].feature.dataView;  //获取dataview
+		                        var table = '<div style="position:absolute;top: 5px;left: 0px;right: 0px;line-height: 1.4em;text-align:center;font-size:14px;">'+dataview.title+'</div>'
+		                        table += getTableCharts(opt, typeName);
+		                        return table;
+		                    }
+		                },
+		                magicType: {show: true, type: ['line', 'bar']},
+		                restore: {show: true},
+		                saveAsImage: {show: true}
+		            }
+		        },
+		        legend:{
+		            data:['检查检验','总收入'],
+		            itemWidth: 15,
+		            itemHeight: 15,
+		        },
+		        grid: {
+		            top: '50px',
+		            left: '-2%',
+		            right: '1%',
+		            bottom: '0',
+		            containLabel: true
+		        },
+		        xAxis : [
+		            {
+		                type : 'category',
+		                name:'年',
+		                data : data.charts.xList,
+		                axisTick: {
+		                    alignWithLabel: true
+		                },
+		                axisLine: {
+		                    lineStyle: {
+		                        type: 'solid',
+		                        color: '#eee',//左边线的颜色
+		                        width:'1'//坐标线的宽度
+		                    }
+		                },
+		                axisLabel: {
+		                    show: true,
+		                    textStyle: {
+		                        color: '#7c7c7c'
+		                    }
+		                }
+		            },
+		        ],
+		            yAxis : [
+		            {
+		                type : 'value',
+		                name:'亿美元',
+		                axisLine: {
+		                    lineStyle: {
+		                        type: 'solid',
+		                        color: 'none',//左边线的颜色
+		                        width:'1'//坐标线的宽度
+		                    }
+		                },
+		                splitLine: {
+		                    lineStyle: {
+		                        color: ['#EDEDF5']
+		                    }
+		                }
+		            },
+		        ],
+		            series : [
+		            {
+		                name:'检查检验',
+		                type:'bar',
+		                barWidth: '11%',
+		                itemStyle:{
+		                    normal:{
+		                        color:'#45CCFB' //柱子的颜色
+		                    }
+		                },
+		                data: barData.y1List
+		            },{
+		                name:'总收入',
+		                type:'line',
+		                symbol:'circle',/*拐点样式*/
+		                symbolSize:6, //拐点大小
+		                itemStyle:{
+		                    normal:{
+		                        color:'#13D251'    //拐点颜色
+		                    }
+		                },
+		                lineStyle:{
+		                    normal:{
+		                        color:'#13D251'  //折线颜色
+		                    }
+		                },
+		                data: data.charts.y3List
+		            }
+		        ]
+		    };
+			// 使用刚指定的配置项和数据显示图表。
+		    censorCharts.setOption(totaloption);
+		    censorCharts.on('legendselectchanged', function (params) {
+		        let option = this.getOption();
+		        let select_key = Object.keys(params.selected);
+		        let num = 0;
+		        select_key.map(res => {
+	                if(params.selected[res] && res != '总收入'){
+	                	num++;
+	                }
+	            });
+		        if(num > 4){
+		        	swal("图例最多只能显示四个！！！", "", "warning");
+		        	option.legend[0].selected[params.name] = false;
+		        }
+		        this.setOption(option)
+		    });
+		    // 页面切换刷新折线图数据
+		    window.addEventListener('resize',function() {
+		    	censorCharts.resize();
+		    })
+        };
+      
+      	//医疗中占比
+        function initBottomReport(pitchOrgCode){
+        	var param = new Object();
+        	//incomeType 医疗收入中各类别 0101.住院 0102.门诊 0103.检查 0104.手术 0105.总收入
+			param.incomeType = "0103";
+			param.orgCode = pitchOrgCode;
+			param.endTime = endTime;
+			param.startTime = $("#layYear").val();
+			$.ajax({
+		        type: 'POST',
+		        //async: false,
+		        url: roadPath + "/family/statsmedicant/getYLItemTypeStats",
+		        dataType: 'json',
+		        contentType: 'application/json',
+		        data: JSON.stringify(param),
+		        error: function (XMLHttpRequest, textStatus, errorThrown) {
+		        	//debugger;
+		        },
+		        success: function (data) {
+					if(data.retCode == 0){
+						optionCookie(data.authorToke);
+						data = data.data;
+						
+						let legendArr = [];
+						let dataArr = [];
+						for(let i = 0; i < data.length; i++){
+							if(data[i].value > 0){
+								dataArr.push(data[i]);
+							}else{
+								data[i].value = null;
+								dataArr.push(data[i]);
+							}
+							legendArr.push(data[i].name);
+						}
+						initBottomCharts(legendArr, dataArr);
+					}
+		        },
+		        complete: function (XMLHttpRequest, textStatus) {
+		        }
+		    });
+        };
+		// 检验检查总收入（环形图）
+		var doughnutCharts;
+		function initBottomCharts(legendArr, dataArr){
+			if(doughnutCharts != undefined){
+				doughnutCharts.dispose();
+        	}
+			doughnutCharts = echarts.init(document.getElementById('doughnutCharts'));
+			
+		    let colors = ['#45CCFB', '#0FE0C0', '#FE67F4', '#A683EA', '#A3DF87', '#F66262',
+		        '#FCB867', '#7767FD', '#0BCE0F', '#FE8F24','#CB75FE', '#F750A0']
+			// 指定图表的配置项和数据
+		    let doughnutoption = {
+		        tooltip: {
+		            trigger: 'item',
+		            formatter: "{a} <br/>{b}: {c} ({d}%)"
+		        },
+		        legend:{
+		        	data: legendArr,
+		        	itemWidth: 15,
+		            itemHeight: 15
+		        },
+		        color: colors,
+		        series: [
+		            {
+		                name:'检验检查总收入占比',
+		                type:'pie',
+		                radius: ['60%', '70%'],
+		                avoidLabelOverlap: true,
+		                label: {
+		                    normal: {
+		                    	show: true,
+                                position: 'outside',
+                                formatter: ' {b} : {c} ({d}%) ',
+                                rich: {
+                                    b: {
+                                        color: '#A9A7A8',
+                                        fontSize: 14,
+                                        lineHeight: 18
+                                    },
+                                }
+		                    },
+		                    emphasis: {
+		                    	show: true,
+                                textStyle: {
+                                    fontSize: '28',
+                                    fontWeight: 'bold'
+                                },
+                                borderRadius: 4,
+                                padding:10
+		                    }
+		                },
+		                labelLine: {
+		                    normal: {
+		                        show: true,
+		                        length: 20,
+                                length2: 30,
+                                lineStyle: {
+                                    color: '#A9A7A8'
+                                }
+		                    }
+		                },
+		                data: dataArr,
+		                itemStyle: {
+		                    normal: {
+		                        borderWidth: 1,
+		                        borderColor: '#fff',
+		                    },
+		                }
+		            }
+		        ]
+		    };
+			// 使用刚指定的配置项和数据显示图表。
+		    doughnutCharts.setOption(doughnutoption);
+		    // 页面切换刷新折线图数据
+		    window.addEventListener('resize',function() {
+		        doughnutCharts.resize();
+		    })	
+		}
+    </script>
+</body>
+</html>

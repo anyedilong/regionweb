@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <title>药品字典目录</title>
+    <link rel="stylesheet" href="/static/tools/layui/css/layui.css"  media="all">
+    <link rel="stylesheet" href="/static/css/publicCss.css">
+    <link rel="stylesheet" href="/static/css/basemanage/sysmenu.css">
+    <script src="/static/js/publicJs.js"></script>
+    <script src="/static/js/basemanage/medicant/medicantdictlist.js"></script>
+    <script src="/static/tools/My97DatePicker/WdatePicker.js"></script>
+	<script src="/static/tools/layui/layui.all.js"></script>
+	<style>
+		select::-ms-expand{ display: none; }
+		tr td {
+			white-space: nowrap;
+		}
+		.pagination {
+			margin: 0;
+		}
+		.add-on {
+    		line-height: 30px; padding: 0 10px;
+    	}
+    	.layui-form {
+    		margin-bottom: 15px;
+    	}
+    	.layui-input {
+  			height: 30px !important; 
+  		}
+  		.layui-inline .layui-form-label {
+			width: auto;
+			padding: 6px 0px !important;
+			margin: 0; 
+		}
+		.layui-form-item {margin-bottom: 0 !important;}
+		.layui-form-item .layui-input-inline {
+			width: auto; margin: 0 !important;
+		}
+		.layui-form-item .layui-inline {
+			margin: 0 !important;
+		}
+		.layui-form-item .layui-input-inline .layuiDates {
+		    display: inline-block;
+		    position: absolute;
+		    top: 50%;
+		    right: 5px;
+		    transform: translate(0, -50%);
+		}
+		.layui-input {
+			min-width: none !important;
+		}
+		.layui-unselect.layui-form-select {
+			width:150px;
+		}
+		.layui-input-inline.dateinp {
+			width: 150px;
+		}
+		.tableBox {
+			width: 100%;
+			height: calc(100% - 230px);
+		}
+		.form-item input[type="text"] {
+			width: 150px; min-width: 150px;
+		}
+		.tableBox tr th:nth-child(1), .tableBox tr td:nth-child(1) {width: 140px}
+		.tableBox tr th:nth-child(2), .tableBox tr td:nth-child(2) {width: 120px}
+		.tableBox tr th:nth-child(3), .tableBox tr td:nth-child(3) {width: 500px}
+	</style>
+</head>
+<body>
+    <div class="animated fadeInRight">
+		<div class="dictionBox clearfix">
+			<div class="dicBox dicBox-table" style="width:100%;">
+		          <div class="tableTit">药品字典目录</div>
+		          <div class="tableForm form-box clearfix">
+		          	 <div class="layui-form" style="float: left;height:30px;">
+		                <div class="layui-form-item">
+		                    <div class="layui-inline">
+		                        <label class="layui-form-label" for="startDate">创建日期：</label>
+		                        <div class="layui-input-inline dateinp">
+		                            <input type="text" class="layui-input" id="startDate" >
+		                            <div class="layuiDates">
+		                                <i class="iconfont qyhicon_date" style="color:#E3E4E8;"></i>
+		                            </div>
+		                        </div>		                        
+		                    </div>		                    
+		                </div>
+		              </div>
+		              <span class="add-on" style="float:left">至</span>
+		              <div class="layui-form" style="float: left;margin-right: 30px; height:30px;">
+		                <div class="layui-form-item">
+		                    <div class="layui-inline">		                       		                      
+		                        <div class="layui-input-inline dateinp">
+		                        	<input type="text" class="layui-input" id="endDate" >
+		                        	<div class="layuiDates">
+		                        		<i class="iconfont qyhicon_date" style="color:#E3E4E8;"></i>
+	                        		</div>
+                        		</div>
+		                    </div>		                    
+		                </div>
+		              </div>
+		              <div class="form-item" style="margin-right: 30px">
+		                  <label for="name">药品名称：</label>
+		                  <input type="text" name="name" id="name">
+		              </div>
+		              <div class="form-item" style="margin-right: 30px">
+		                  <label for="simplePinyin">药品简拼：</label>
+		                  <input type="text" name="simplePinyin" id="simplePinyin">
+		              </div>
+		               <div class="layui-form" style="float: left; margin-right: 30px; height:30px;">
+			                <div class="layui-form-item">		                   		                 
+			                    <div class="layui-inline">
+			                        <label class="layui-form-label" for="classLevel">药品等级分类：</label>
+			                        <div class="layui-input-inline">
+					                        <select name="classLevel" id="classLevel" class="layui-input inpauto" style="width:90px;">
+			                                </select>
+				                      </div>
+			                    </div>
+			                </div>
+		              </div>	
+		              <div class="layui-form" style="float: left; margin-right: 30px; height:30px;">
+			                <div class="layui-form-item">		                   		                 
+			                    <div class="layui-inline">
+			                        <label class="layui-form-label" for="classZw">药品中外分类：</label>
+			                        <div class="layui-input-inline">
+					                        <select name="classZw" id="classZw" class="layui-input inpauto" style="width:90px;">
+			                                </select>
+				                      </div>
+			                    </div>
+			                </div>
+		              </div>	
+		              <div class="layui-form" style="float: left; margin-right: 30px; height:30px;">
+			                <div class="layui-form-item">		                   		                 
+			                    <div class="layui-inline">
+			                        <label class="layui-form-label" for="classBase">药品基药分类：</label>
+			                        <div class="layui-input-inline">
+					                        <select name="classBase" id="classBase" class="layui-input inpauto" style="width:90px;">
+			                                </select>
+				                      </div>
+			                    </div>
+			                </div>
+		              </div>		              
+		              <div class="form-item" style="margin-right: 20px">
+		                  <input type="button" class="search" id="searchBtn" value="查询">
+		              </div>
+		              <div class="form-item" style="margin-right: 20px">
+		                  <input type="button" class="reset" id="resetBtn" value="重置">
+		              </div>
+		              <div class="form-item" style="float: right">
+		                  <input type="button" class="add" onclick="openSaveDialog();" value="添加">
+		              </div>
+		          </div>
+		          <div class="tableBox">		
+		               <div class="tabledata-box">
+		                    <table>
+		                        <thead>
+		                            <tr>
+		                                <th>药品编号</th>
+				                        <th>药品简拼</th>
+				                        <th>药品名称</th>
+				                        <th>药品用法</th>
+				                        <th>等级分类</th>
+				                        <th>中外分类</th>
+				                        <th>基药分类</th>
+				                        <th>创建时间</th>
+				                        <th>操作</th>
+		                            </tr>
+		                        </thead>
+		                    </table>
+		                </div>
+	            	</div>
+		            <div class="pagingBox" style="margin-top:20px">
+		                <div id="myPage" class="myPage"><!-- 这里显示分页 --></div>
+		            </div>
+	          </div>
+	    </div>
+	</div>
+</body>
+<script type="text/javascript">
+	$(function(){
+    	//时间插件
+    	layui.use('laydate', function(){
+            var laydate = layui.laydate;
+            //日期范围
+            laydate.render({
+                elem: '#startDate',
+                theme: '#0C95FF',
+                value: '',
+                btns: ['now', 'confirm']
+            });
+            laydate.render({
+                elem: '#endDate',
+                theme: '#0C95FF',
+                value: '',
+                btns: ['now', 'confirm']
+            });
+        });
+    	layui.use('form', function(){  //此段代码必不可少
+            var form = layui.form;
+            form.render();
+        });
+    });
+</script>
+</html>

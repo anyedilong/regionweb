@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <title>核酸检验人员信息</title>
+    <link rel="stylesheet" href="/static/css/publicCss.css">
+    <link rel="stylesheet" href="/static/css/basemanage/sysmenu.css">
+    <script src="/static/js/publicJs.js"></script>
+    <script src="/static/js/basemanage/nuclein/sysnucleinlist.js"></script>
+	<style>
+		select::-ms-expand{ display: none; }
+		tr td {
+			white-space: nowrap;
+		}
+		.pagination {
+			margin: 0;
+		}
+	</style>
+</head>
+<body>
+    <div class="animated fadeInRight">
+		<div class="dictionBox clearfix">
+			<div class="dicBox dicBox-table" style="width:100%;">
+		          <div class="tableTit">核酸检验人员信息</div>
+		          <div class="tableForm form-box clearfix">
+		              <div class="form-item" style="margin-right: 30px">
+		                  <label for="name">机构名称：</label>
+		                  <input type="text" name="orgName" id="orgName">
+		              </div>
+		              <div class="form-item" style="margin-right: 30px">
+		                  <label for="code">机构代码：</label>
+		                  <input type="text" name="orgCode" id="orgCode">
+		              </div>
+		              <div class="form-item" style="margin-right: 30px">
+		                  <label for="name">身份证号：</label>
+		                  <input type="text" name="sfzh" id="sfzh">
+		              </div>
+		              <div class="form-item" style="margin-right: 30px">
+		                  <label for="code">居民姓名：</label>
+		                  <input type="text" name="residentName" id="residentName">
+		              </div>
+		              <div class="form-item" style="margin-right: 20px">
+		                  <input type="button" class="search" id="searchBtn" value="查询">
+		              </div>
+		              <div class="form-item" style="margin-right: 20px">
+		                  <input type="button" class="reset" id="resetBtn" value="重置">
+		              </div>
+		          </div>
+		          <div class="tableBox">		
+	                <div class="tabledata-box">
+	                    <table>
+	                        <thead>
+	                            <tr>
+	                                <th>身份证号</th>
+			                        <th width="100px">姓名</th>
+			                        <th width="100px">性别</th>
+			                        <th width="100px">年龄</th>
+			                        <th>家庭住址</th>
+			                        <th width="100px">检验结果</th>
+			                        <th>检验时间</th>
+			                        <th>检验机构</th>
+			                        <th>检验医生</th>
+	                            </tr>
+	                        </thead>
+	                    </table>
+	                </div>
+            	</div>
+	            <div class="pagingBox" style="margin-top:20px">
+	                <div id="myPage" class="myPage"><!-- 这里显示分页 --></div>
+	            </div>
+	          </div>
+	    </div>
+	</div>
+</body>
+</html>

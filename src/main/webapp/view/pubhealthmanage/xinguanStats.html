@@ -1,0 +1,308 @@
+<!--新冠检验统计-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>新冠检验统计</title>
+    <link rel="stylesheet" href="/static/css/publicCss.css">
+    <link rel="stylesheet" href="/static/css/statsmanage/operationStyle.css">
+    <script src="/static/js/publicJs.js"></script>
+    <script type="text/javascript" src="/static/js/common/echarts.min.js"></script>
+    <style>
+    	#income a {
+    		color: #000 !important;
+    	}
+    	.titleData>li{
+    		width: 25%;
+    	}
+    	.income>li:nth-child(1){
+    		width:100%;
+    	}
+    </style>
+</head>
+<body style="padding:20px 10px;box-sizing: border-box;">
+    <div class="animated fadeInRight" style="width:100%">
+	    <div class="bgcontainer">
+	        <h3 style="margin-left:10px;">新冠检验统计</h3>
+	        <ul class="row titleData" style="margin:0 0 20px 0 !important;padding:0 !important;width:100% !important;">
+	            <li class="">
+	                <div class="data1 clearfix">
+	                    <div style="display: inline-block;" id="indicatorContainer0"></div>
+	                    <div class="inpatinetIncome" id="inpatinetIncome0"></div>
+	                </div>
+	            </li>
+	            <li class="">
+	                <div class="data2 clearfix">
+	                    <div style="display: inline-block;" id="indicatorContainer1"></div>
+	                    <div class="inpatinetIncome" id="inpatinetIncome1"></div>
+	                </div>
+	            </li>
+	            <li class="">
+	                <div class="data3 clearfix">
+	                    <div style="display: inline-block;" id="indicatorContainer2"></div>
+	                    <div class="inpatinetIncome" id="inpatinetIncome2"></div>
+	                </div>
+	            </li>
+	            <li style="clear:both"></li>
+	        </ul>
+	        <ul class="row income" style="margin:0 !important;padding:0 !important;width:100% !important;">
+	            <li class="">
+	                <div class="annualIncome">
+	                    <h3>新冠检验总人次</h3>
+	                    <div id="main" style="width: 100%;height:326px;"></div>
+	                </div>
+	            </li>
+	             <li style="clear:both"></li>
+	        </ul>
+	    </div>
+	</div>
+    <!--百分比圆环-->
+    <script type="text/javascript" src="/static/js/statsmanage/radialIndicator.js"></script>
+    <script type="text/javascript">
+	    var orgCode = '';
+		var endTime = '';
+        $(function () {
+        	//初始化医疗收入汇总和年度医疗收入charts
+        	initYLChargeData();
+        })
+        
+        function initYLChargeData(){
+        	//获取家医签约汇总和年度签约人次折线图的数据
+        	var param = new Object();
+			param.incomeType = "20";
+			param.orgCode = orgCode;
+			param.endTime = endTime;
+			param.startTime = $("#layYear").val();
+			$.ajax({
+		        type: 'POST',
+		        //async: false,
+		        url: roadPath + "/family/statspoct/getNucleinCheckStats",
+		        dataType: 'json',
+		        contentType: 'application/json',
+		        data: JSON.stringify(param),
+		        error: function (XMLHttpRequest, textStatus, errorThrown) {
+		        	//debugger;
+		        },
+		        success: function (data) {
+					if(data.retCode == 0){
+						optionCookie(data.authorToke);
+			        	//初始化核酸检验统计
+			        	initTopShow(data.data.summary);
+			        	//初始化年度核酸检验人次折线图
+			        	initLeftLineCharts(data.data.charts);
+					}
+		        },
+		        complete: function (XMLHttpRequest, textStatus) {
+		        }
+		    });
+        }
+        
+        function initTopShow(indicatorArr){
+        	//核酸检验汇总
+        	for(var i = 0; i < indicatorArr.length; i++){
+        		$('#indicatorContainer'+i).radialIndicator({
+                    barColor: '#fff',
+                    barWidth: 5,
+                    initValue: indicatorArr[i].value1,
+                    roundCorner: true,
+                    percentage: true
+                });
+        		
+        		$('#inpatinetIncome'+i).append('<span>'+indicatorArr[i].value+'</span><span>'+indicatorArr[i].name+'</span>');
+        	}
+        	let divparent = window.parent
+        	let urls = ''     
+        	function commonFun () {
+        		// 去除tab状态
+        		divparent.$('.tabUl .tabLi').removeClass('tabLiact')
+        		// 去除菜单栏样式
+        		divparent.$('.yiji-li>.menu-div').removeClass('menuact1')
+		        divparent.$('.erji-ul').stop().slideUp()
+		        divparent.$('.erji-li>.menu-div').removeClass('menuact2')
+        	}
+        	
+        	// 核酸检验人次汇总跳转
+            $(".bgcontainer").on("click",".data1",function(){
+            	//commonFun();
+            	window.parent.$("#mainPage").attr("src", '../pubhealthmanage/xinguanDetail.html');
+            	//	urls = '../pubhealthmanage/xinguanDetail.html'
+               //window.parent.$('#mainPage').attr('src', urls)
+                /* let liurl = ''
+                for (let i = 0; i < divparent.$('.tabUl li').length; i++) {                	       
+                	liurl += divparent.$('.tabUl li').eq(i).attr('src')
+                	if (divparent.$('.tabUl li').eq(i).attr('src') == urls) {
+                		divparent.$('.tabUl li').eq(i).addClass('tabLiact')
+                	}
+                }                      
+            	if (liurl.indexOf(urls) < 0) {
+            		divparent.$('.tabUl').append(' <li class="tabLi tabLiact" his="' + urls + '" src="' + urls + '"><span>' +
+                    '新冠检验人次</span><i class="qyhclose iconBtn"></i></li>')
+            	}
+                for (let i = 0; i < divparent.$('.erji-li .menu-div').length; i++) {
+		            let menuUrl = divparent.$('.erji-li .menu-div').eq(i).attr('src')	
+		            if (menuUrl == urls) {
+		            	divparent.$('.erji-li .menu-div').eq(i).addClass('menuact2')
+		            	divparent.$('.erji-li .menu-div').eq(i).attr('act','true')
+		                divparent.$('.erji-li .menu-div').eq(i).parents('.yiji-li').children('.menu-div').addClass('menuact1')
+		                divparent.$('.erji-li .menu-div').eq(i).parents('.yiji-li').children('.erji-ul').stop().slideDown()	 
+		            }	                              
+		        } */
+            });
+            $(".bgcontainer").on("click",".data2",function(){
+            	//commonFun();
+            	window.parent.$("#mainPage").attr("src", '../pubhealthmanage/xinguanYinDetail.html');
+                //urls = '../pubhealthmanage/xinguanYinDetail.html'
+                //window.parent.$('#mainPage').attr('src', urls)
+                /* let liurl = ''
+                for (let i = 0; i < divparent.$('.tabUl li').length; i++) {                	       
+                	liurl += divparent.$('.tabUl li').eq(i).attr('src')
+                	if (divparent.$('.tabUl li').eq(i).attr('src') == urls) {
+                		divparent.$('.tabUl li').eq(i).addClass('tabLiact')
+                	}
+                }                      
+            	if (liurl.indexOf(urls) < 0) {
+            		divparent.$('.tabUl').append(' <li class="tabLi tabLiact" his="' + urls + '" src="' + urls + '"><span>' +
+                    '检验结果呈阴性</span><i class="qyhclose iconBtn"></i></li>')
+            	}
+                for (let i = 0; i < divparent.$('.erji-li .menu-div').length; i++) {
+		            let menuUrl = divparent.$('.erji-li .menu-div').eq(i).attr('src')	
+		            if (menuUrl == urls) {
+		            	divparent.$('.erji-li .menu-div').eq(i).addClass('menuact2')
+		            	divparent.$('.erji-li .menu-div').eq(i).attr('act','true')
+		                divparent.$('.erji-li .menu-div').eq(i).parents('.yiji-li').children('.menu-div').addClass('menuact1')
+		                divparent.$('.erji-li .menu-div').eq(i).parents('.yiji-li').children('.erji-ul').stop().slideDown()	 
+		            }	                              
+		        } */
+            });
+            $(".bgcontainer").on("click",".data3",function(){
+                //commonFun();
+                window.parent.$("#mainPage").attr("src", '../pubhealthmanage/xinguanYangDetail.html');
+                //urls = '../pubhealthmanage/xinguanYangDetail.html'
+                //window.parent.$('#mainPage').attr('src', urls)
+                /* let liurl = ''
+                for (let i = 0; i < divparent.$('.tabUl li').length; i++) {                	       
+                	liurl += divparent.$('.tabUl li').eq(i).attr('src')
+                	if (divparent.$('.tabUl li').eq(i).attr('src') == urls) {
+                		divparent.$('.tabUl li').eq(i).addClass('tabLiact')
+                	}
+                }                      
+            	if (liurl.indexOf(urls) < 0) {
+            		divparent.$('.tabUl').append(' <li class="tabLi tabLiact" his="' + urls + '" src="' + urls + '"><span>' +
+                    '检验结果呈阳性</span><i class="qyhclose iconBtn"></i></li>')
+            	}
+                for (let i = 0; i < divparent.$('.erji-li .menu-div').length; i++) {
+		            let menuUrl = divparent.$('.erji-li .menu-div').eq(i).attr('src')	
+		            if (menuUrl == urls) {
+		            	divparent.$('.erji-li .menu-div').eq(i).addClass('menuact2')
+		            	divparent.$('.erji-li .menu-div').eq(i).attr('act','true')
+		                divparent.$('.erji-li .menu-div').eq(i).parents('.yiji-li').children('.menu-div').addClass('menuact1')
+		                divparent.$('.erji-li .menu-div').eq(i).parents('.yiji-li').children('.erji-ul').stop().slideDown()	 
+		            }	                              
+		        } */
+            });
+        }
+     // 年度医疗收入（折线）
+        function initLeftLineCharts(data){
+        	let myChart = echarts.init(document.getElementById('main'));
+            // 指定图表的配置项和数据
+            let option = {
+                tooltip: {
+                    trigger: 'axis'
+                },
+                legend: {
+                    data:['阴性','阳性','总人次'],
+                    itemWidth: 15,
+		            itemHeight: 15,
+                },
+                grid: {
+                    top: '40px',
+                    left: '0',
+                    right: '35px',
+                    bottom: '20px',
+                    containLabel: true
+                },
+                xAxis: {
+                    type: 'category',
+                    // 去掉x轴刻度线往下的延伸
+                    axisTick: {
+                        show: false
+                    },
+                    boundaryGap: false,
+                    data: data.xList,
+                    axisLine: {
+                        lineStyle: {
+                            type: 'solid',
+                            color: '#eee',//左边线的颜色
+                            width:'1'//坐标线的宽度
+                        }
+                    },
+                    axisLabel: {
+                        show: true,
+                        textStyle: {
+                            color: '#7c7c7c'
+                        }
+                    }
+                },
+                yAxis: {
+                    type: 'value',
+                    axisLine: {
+                        lineStyle: {
+                            type: 'solid',
+                            color: 'none',//左边线的颜色
+                            width:'1'//坐标线的宽度
+                        }
+                    },
+                    splitLine: {
+                        lineStyle: {
+                            color: ['#EDEDF5']
+                        }
+                    }
+                },
+                series: [{
+	                name:'阴性',
+	                type:'bar',
+	                barWidth: '11%',
+	                itemStyle:{
+	                    normal:{
+	                        color:'#FF8A1B' //柱子的颜色
+	                    }
+	                },
+	                data: data.y2List
+	            },{
+	                name:'阳性',
+	                type:'bar',
+	                barWidth: '11%',
+	                itemStyle:{
+	                    normal:{
+	                        color:'#F750A0' //柱子的颜色
+	                    }
+	                },
+	                data: data.y3List
+	            }, {
+                        name:'总人次',
+                        type:'line',
+                        symbol: 'circle',//折线点设置为实心点
+                        symbolSize: 6,   //折线点的大小
+                        itemStyle: {
+                            normal: {
+                                color: "#13D251",//折线点的颜色
+                                lineStyle: {
+                                    color: "#13D251"//折线的颜色
+                                }
+                            }
+                        },
+                        data: data.y1List
+                    }
+                ]
+            };
+        	// 使用刚指定的配置项和数据显示图表。
+            myChart.setOption(option);
+            // 页面切换刷新折线图数据
+            window.addEventListener('resize',function() {
+                // resizeWorldMapContainer()
+                myChart.resize();
+            })
+        }
+    </script>
+</body>
+</html>

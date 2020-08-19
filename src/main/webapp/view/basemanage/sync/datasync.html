@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <title>供应商目录</title>
+    <link rel="stylesheet" href="/static/css/publicCss.css">
+    <link rel="stylesheet" href="/static/css/basemanage/sysmenu.css">
+    <script src="/static/js/publicJs.js"></script>
+	<style>
+		select::-ms-expand{ display: none; }
+		tr td {
+			white-space: nowrap;
+		}
+		.pagination {
+			margin: 0;
+		}
+		.zhihui {
+			background:gray !important;
+		}
+	</style>
+</head>
+<body>
+    <div class="animated fadeInRight">
+		<div class="form-item" style="margin-right: 20px">
+            <input type="button" class="search" id="syncCustomer" value="同步档案">
+        </div>
+        <div class="form-item" style="margin-right: 20px">
+            <input type="button" class="search" id="syncCheck" value="同步体检">
+        </div>
+        <div class="form-item" style="margin-right: 20px">
+            <input type="button" class="search" id="syncFollow" value="同步随访">
+        </div>
+        <div class="form-item" style="margin-right: 20px">
+            <input type="button" class="search" id="syncSign" value="同步签约">
+        </div>
+        <div class="form-item" style="margin-right: 20px">
+            <input type="button" class="search" id="syncPackageProject" value="同步服务包与服务项">
+        </div>
+        <div class="form-item" style="margin-right: 20px">
+            <input type="button" class="search" id="syncBasy" value="同步病案首页">
+        </div>
+        <div class="form-item" style="margin-right: 20px">
+            <input type="button" class="search" id="syncOutptionJS" value="同步门诊结算">
+        </div>
+        <div class="form-item" style="margin-right: 20px">
+            <input type="button" class="search" id="syncOutptionInfo" value="同步门诊信息">
+        </div>
+        <div class="form-item" style="margin-right: 20px">
+            <input type="button" class="search" id="syncOutptionRf" value="同步门诊处方">
+        </div>
+        <div class="form-item" style="margin-right: 20px">
+            <input type="button" class="search" id="syncOutptionJc" value="同步门诊检查">
+        </div>
+        <div class="form-item" style="margin-right: 20px">
+            <input type="button" class="search" id="syncHospitalInfo" value="同步住院信息">
+        </div>
+        <div class="form-item" style="margin-right: 20px">
+            <input type="button" class="search" id="syncHospitalJc" value="同步住院检查">
+        </div>
+        <div class="form-item" style="margin-right: 20px">
+            <input type="button" class="search" id="syncHospitalOrder" value="同步住院医嘱">
+        </div>
+        <div class="form-item" style="margin-right: 20px">
+            <input type="button" class="search" id="syncDoctorInfo" value="同步医生信息">
+        </div>
+	</div>
+</body>
+<script type="text/javascript">
+	$(function () {
+		 $("#syncCustomer").click(function(){
+			 syncCustomer();
+	     });
+		 $("#syncCheck").click(function(){
+			 syncCheck();
+	     });
+		 $("#syncFollow").click(function(){
+			 syncFollow();
+	     });
+		 $("#syncSign").click(function(){
+			 syncSign();
+	     });
+		 $("#syncPackageProject").click(function(){
+			 syncPackageProject();
+	     });
+		 $("#syncBasy").click(function(){
+			 syncBasy();
+	     });
+		 $("#syncOutptionJS").click(function(){
+			 syncOutptionJS();
+	     });
+		 $("#syncOutptionInfo").click(function(){
+			 syncOutptionInfo();
+	     });
+		 $("#syncOutptionRf").click(function(){
+			 syncOutptionRf();
+	     });
+		 $("#syncOutptionJc").click(function(){
+			 syncOutptionJc();
+	     });
+		 $("#syncHospitalInfo").click(function(){
+			 syncHospitalInfo();
+	     });
+		 $("#syncHospitalJc").click(function(){
+			 syncHospitalJc();
+	     });
+		 $("#syncHospitalOrder").click(function(){
+			 syncHospitalOrder();
+	     });
+		 $("#syncDoctorInfo").click(function(){
+			 syncDoctorInfo();
+	     });
+	});
+	
+	function syncCustomer(){
+		$("#syncCustomer").addClass('zhihui');
+		$("#syncCustomer").attr("disabled", "disabled");
+		$.ajax({
+            type: 'POST',
+            url: roadPath + "/data/sync/customer",
+            dataType: 'json',
+            contentType: 'application/json',
+            data: {},
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+            	//debugger;
+            },
+            success: function (data) {
+            	$("#syncCustomer").removeAttr("disabled");
+            	$("#syncCustomer").removeClass('zhihui');
+            	alert(data);
+            },
+            complete: function (XMLHttpRequest, textStatus) {
+            }
+        });
+    }
+	function syncCheck(){
+		$("#syncCheck").addClass('zhihui');
+		$("#syncCheck").attr("disabled", "disabled");
+		$.ajax({
+            type: 'POST',
+            url: roadPath + "/data/sync/check",
+            dataType: 'json',
+            contentType: 'application/json',
+            data: {},
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+            	//debugger;
+            },
+            success: function (data) {
+            	$("#syncCheck").removeAttr("disabled");
+            	$("#syncCheck").removeClass('zhihui');
+            	alert(data);
+            },
+            complete: function (XMLHttpRequest, textStatus) {
+            }
+        });
+	}
+	function syncFollow(){
+		$("#syncFollow").addClass('zhihui');
+		$("#syncFollow").attr("disabled", "disabled");
+		$.ajax({
+            type: 'POST',
+            url: roadPath + "/data/sync/follow",
+            dataType: 'json',
+            contentType: 'application/json',
+            data: {},
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+            	//debugger;
+            },
+            success: function (data) {
+            	$("#syncFollow").removeAttr("disabled");
+            	$("#syncFollow").removeClass('zhihui');
+            	alert(data);
+            },
+            complete: function (XMLHttpRequest, textStatus) {
+            }
+        });
+	}
+	function syncSign(){
+		$("#syncSign").addClass('zhihui');
+		$("#syncSign").attr("disabled", "disabled");
+		$.ajax({
+            type: 'POST',
+            url: roadPath + "/data/sync/sign",
+            dataType: 'json',
+            contentType: 'application/json',
+            data: {},
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+            	//debugger;
+            },
+            success: function (data) {
+            	$("#syncSign").removeAttr("disabled");
+            	$("#syncSign").removeClass('zhihui');
+            	alert(data);
+            },
+            complete: function (XMLHttpRequest, textStatus) {
+            }
+        });
+	}
+	function syncPackageProject(){
+		$("#syncPackageProject").addClass('zhihui');
+		$("#syncPackageProject").attr("disabled", "disabled");
+		$.ajax({
+            type: 'POST',
+            url: roadPath + "/data/sync/packageProject",
+            dataType: 'json',
+            contentType: 'application/json',
+            data: {},
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+            	//debugger;
+            },
+            success: function (data) {
+            	$("#syncPackageProject").removeAttr("disabled");
+            	$("#syncPackageProject").removeClass('zhihui');
+            	alert(data);
+            },
+            complete: function (XMLHttpRequest, textStatus) {
+            }
+        });
+	}
+	function syncBasy(){
+		$("#syncBasy").addClass('zhihui');
+		$("#syncBasy").attr("disabled", "disabled");
+		$.ajax({
+            type: 'POST',
+            url: roadPath + "/data/sync/basyHospital",
+            dataType: 'json',
+            contentType: 'application/json',
+            data: {},
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+            	//debugger;
+            },
+            success: function (data) {
+            	$("#syncBasy").removeAttr("disabled");
+            	$("#syncBasy").removeClass('zhihui');
+            	alert(data);
+            },
+            complete: function (XMLHttpRequest, textStatus) {
+            }
+        });
+	}
+	function syncOutptionJS(){
+		$("#syncOutptionJS").addClass('zhihui');
+		$("#syncOutptionJS").attr("disabled", "disabled");
+		$.ajax({
+            type: 'POST',
+            url: roadPath + "/data/sync/outptionJS",
+            dataType: 'json',
+            contentType: 'application/json',
+            data: {},
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+            	//debugger;
+            },
+            success: function (data) {
+            	$("#syncOutptionJS").removeAttr("disabled");
+            	$("#syncOutptionJS").removeClass('zhihui');
+            	alert(data);
+            },
+            complete: function (XMLHttpRequest, textStatus) {
+            }
+        });
+	}
+	function syncOutptionInfo(){
+		$("#syncOutptionInfo").addClass('zhihui');
+		$("#syncOutptionInfo").attr("disabled", "disabled");
+		$.ajax({
+            type: 'POST',
+            url: roadPath + "/data/sync/outptionInfo",
+            dataType: 'json',
+            contentType: 'application/json',
+            data: {},
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+            	//debugger;
+            },
+            success: function (data) {
+            	$("#syncOutptionInfo").removeAttr("disabled");
+            	$("#syncOutptionInfo").removeClass('zhihui');
+            	alert(data);
+            },
+            complete: function (XMLHttpRequest, textStatus) {
+            }
+        });
+	}
+	function syncOutptionRf(){
+		$("#syncOutptionRf").addClass('zhihui');
+		$("#syncOutptionRf").attr("disabled", "disabled");
+		$.ajax({
+            type: 'POST',
+            url: roadPath + "/data/sync/outptionRf",
+            dataType: 'json',
+            contentType: 'application/json',
+            data: {},
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+            	//debugger;
+            },
+            success: function (data) {
+            	$("#syncOutptionRf").removeAttr("disabled");
+            	$("#syncOutptionRf").removeClass('zhihui');
+            	alert(data);
+            },
+            complete: function (XMLHttpRequest, textStatus) {
+            }
+        });
+	}
+	function syncOutptionJc(){
+		$("#syncOutptionJc").addClass('zhihui');
+		$("#syncOutptionJc").attr("disabled", "disabled");
+		$.ajax({
+            type: 'POST',
+            url: roadPath + "/data/sync/outptionJc",
+            dataType: 'json',
+            contentType: 'application/json',
+            data: {},
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+            	//debugger;
+            },
+            success: function (data) {
+            	$("#syncOutptionJc").removeAttr("disabled");
+            	$("#syncOutptionJc").removeClass('zhihui');
+            	alert(data);
+            },
+            complete: function (XMLHttpRequest, textStatus) {
+            }
+        });
+	}
+	function syncHospitalInfo(){
+		$("#syncHospitalInfo").addClass('zhihui');
+		$("#syncHospitalInfo").attr("disabled", "disabled");
+		$.ajax({
+            type: 'POST',
+            url: roadPath + "/data/sync/hospitalInfo",
+            dataType: 'json',
+            contentType: 'application/json',
+            data: {},
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+            	//debugger;
+            },
+            success: function (data) {
+            	$("#syncHospitalInfo").removeAttr("disabled");
+            	$("#syncHospitalInfo").removeClass('zhihui');
+            	alert(data);
+            },
+            complete: function (XMLHttpRequest, textStatus) {
+            }
+        });
+	}
+	function syncHospitalJc(){
+		$("#syncHospitalJc").addClass('zhihui');
+		$("#syncHospitalJc").attr("disabled", "disabled");
+		$.ajax({
+            type: 'POST',
+            url: roadPath + "/data/sync/hospitalJc",
+            dataType: 'json',
+            contentType: 'application/json',
+            data: {},
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+            	//debugger;
+            },
+            success: function (data) {
+            	$("#syncHospitalJc").removeAttr("disabled");
+            	$("#syncHospitalJc").removeClass('zhihui');
+            	alert(data);
+            },
+            complete: function (XMLHttpRequest, textStatus) {
+            }
+        });
+	}
+	function syncHospitalOrder(){
+		$("#syncHospitalOrder").addClass('zhihui');
+		$("#syncHospitalOrder").attr("disabled", "disabled");
+		$.ajax({
+            type: 'POST',
+            url: roadPath + "/data/sync/hospitalOrder",
+            dataType: 'json',
+            contentType: 'application/json',
+            data: {},
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+            	//debugger;
+            },
+            success: function (data) {
+            	$("#syncHospitalOrder").removeAttr("disabled");
+            	$("#syncHospitalOrder").removeClass('zhihui');
+            	alert(data);
+            },
+            complete: function (XMLHttpRequest, textStatus) {
+            }
+        });
+	}
+	function syncDoctorInfo(){
+		$("#syncDoctorInfo").addClass('zhihui');
+		$("#syncDoctorInfo").attr("disabled", "disabled");
+		$.ajax({
+            type: 'POST',
+            url: roadPath + "/data/sync/syncDoctor",
+            dataType: 'json',
+            contentType: 'application/json',
+            data: {},
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+            	//debugger;
+            },
+            success: function (data) {
+            	$("#syncDoctorInfo").removeAttr("disabled");
+            	$("#syncDoctorInfo").removeClass('zhihui');
+            	alert(data);
+            },
+            complete: function (XMLHttpRequest, textStatus) {
+            }
+        });
+	}
+</script>
+</html>

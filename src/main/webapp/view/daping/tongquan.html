@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title id="toptitle"></title>
+    <link rel="stylesheet" href="/static/css/common/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/css/reset.css">
+    <link rel="stylesheet" href="/static/css/daping/base.css">
+    <link rel="stylesheet" href="/static/css/daping/tongquan.css">
+    <link rel="stylesheet" href="/static/css/daping/dyroll.css">
+    <script src="/static/js/common/jquery-2.1.4.min.js"></script>
+    <script src="/static/js/common/bootstrap.min.js"></script>
+    <script src="/static/js/common/echarts.min.js"></script> 
+    <script src="/static/js/common/loginValidate.js"></script>
+    <script src="/static/js/common/jquery.util.js"></script>
+    <style>
+    	.iconBox-li {
+            width: 25%;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="pageTop">
+        <div class="pageTopBtn page-topl">
+            <div class="Top-btn">
+                <img src="/static/img/tongquan/icon_back.png" alt="">
+            </div>
+            <div class="Top-btn">
+                <img src="/static/img/tongquan/icon_home.png" alt="">
+            </div>
+            <div class="Top-btn"></div>
+            <div class="sanjiaozuo">
+                <span></span>
+            </div>
+        </div>
+        <div class="pageTopTit">
+            <div style=" width: 100%;" id="areaTile"></div>
+            <!--<img src="./img" alt="">-->
+        </div>
+        <div class="pageTopDT page-topr">
+            <div class="pageTopTime"></div>
+            <div class="pageTopDate"></div>
+            <div class="sanjiaoyou">
+                <span></span>
+            </div>
+        </div>
+    </div>
+    <div class="pageBody chartsBox">
+        <div class="iconBox">
+            <ul class="iconBox-ul">
+                <li class="iconBox-li">
+                    <div>
+                        <div class="iconBox-liicon">
+                            <img src="/static/img/tongquan/icon_dangan.png" alt="">
+                        </div>
+                        <div class="iconBox-litxt">
+                            <div class="iconBox-litxtTit">建档人数</div>
+                            <div class="iconBox-litxtTitData" id="archiveNum"></div>
+                        </div>
+                    </div>
+                </li>
+                <li class="iconBox-li">
+                    <div>
+                        <div class="iconBox-liicon">
+                            <img src="/static/img/tongquan/icon_qianyue.png" alt="">
+                        </div>
+                        <div class="iconBox-litxt">
+                            <div class="iconBox-litxtTit">年度签约人数</div>
+                            <div class="iconBox-litxtTitData" id="signNum"></div>
+                        </div>
+                    </div>
+                </li>
+                <li class="iconBox-li">
+                    <div>
+                        <div class="iconBox-liicon">
+                            <img src="/static/img/tongquan/icon_tijian.png" alt="">
+                        </div>
+                        <div class="iconBox-litxt">
+                            <div class="iconBox-litxtTit">年度体检人次</div>
+                            <div class="iconBox-litxtTitData" id="checkNum"></div>
+                        </div>
+                    </div>
+                </li>
+                <li class="iconBox-li">
+                    <div>
+                        <div class="iconBox-liicon">
+                            <img src="/static/img/renminyiyuan/icon_jiuzhen.png" alt="">
+                        </div>
+                        <div class="iconBox-litxt">
+                            <div class="iconBox-litxtTit">新冠人数</div>
+                            <div class="iconBox-litxtTitData" id="nucleinNum"></div>
+                        </div>
+                    </div>
+                </li>
+                <!-- <li class="iconBox-li">
+                    <div>
+                        <div class="iconBox-liicon">
+                            <img src="/static/img/tongquan/icon_pinkun.png" alt="">
+                        </div>
+                        <div class="iconBox-litxt">
+                            <div class="iconBox-litxtTit">当前贫困人口</div>
+                            <div class="iconBox-litxtTitData" id="poorNum"></div>
+                        </div>
+                    </div>
+                </li> -->
+                <!-- <li class="iconBox-li">
+                    <div>
+                        <div class="iconBox-liicon">
+                            <img src="/static/img/tongquan/icon_tuopin.png" alt="">
+                        </div>
+                        <div class="iconBox-litxt">
+                            <div class="iconBox-litxtTit">年度脱贫人次</div>
+                            <div class="iconBox-litxtTitData">156,204</div>
+                        </div>
+                    </div>
+                </li> -->
+            </ul>
+        </div>
+        <div class="row" style="width: 100%;margin: 0">
+            <div class="col-md-6 col-xs-6 col-sm-6 chartsBox-l">
+                <div class="chartsl-a boxlights boxborder">
+                    <div class="chartboxTit">年度建档人群占比</div>
+                    <div>
+                        <div id="jiandangmeigui" style="float: left;width: 40%"></div>
+                        <div id="jiandangbar" class="boxborder-left" style="float: left;width: 60%"></div>
+                        <div style="clear: both"></div>
+                    </div>
+                </div>
+                <div class="chartsl-b boxlights boxborder">
+                    <div class="chartboxTit">家庭医生签约</div>
+                    <div id="jiayimeiguibox">
+                        <div style="float: left;width: 40%">
+                            <div class="jiayimeiguitop">
+                                <div class="col-md-4">
+                                    <div class="jiayimeiguitop-dis">签约人数</div>
+                                    <div class="jiayimeiguitop-data" id="signNum1"></div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="jiayimeiguitop-dis">解约人数</div>
+                                    <div class="jiayimeiguitop-data" id="unsignNum"></div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="jiayimeiguitop-dis">到期人数</div>
+                                    <div class="jiayimeiguitop-data" id="outsignNum"></div>
+                                </div>
+                            </div>
+                            <div id="jiayimeigui"></div>
+                        </div>
+                        <div id="jiayibar" class="boxborder-left" style="float: left;width: 60%"></div>
+                        <div style="clear: both"></div>
+                    </div>
+                    <!--<div id="renquncharts"></div>-->
+                </div>
+                <div class="chartsl-c">
+                    <div style="float: left;width: 50%;box-sizing: border-box;padding-right: 5px">
+                       <div class="boxlights boxborder">
+                           <div class="chartboxTit">年度总收入</div>
+                           <div id="nianduzongshouru"></div>
+                       </div>
+                    </div>
+                    <div style="float: left;width: 50%;box-sizing: border-box;padding-left: 5px">
+                        <div class="boxlights boxborder">
+                            <div class="chartboxTit">科室收入排名</div>
+                            <div id="yibaoshouru"></div>
+                        </div>
+                    </div>
+                    <div style="clear: both"></div>
+                </div>
+            </div>
+            <div class="col-md-6 col-xs-6 col-sm-6 chartsBox-r">
+                <div class="chartsr-a boxlights boxborder">
+                    <div class="chartboxTit">年度随访人次</div>
+                    <div>
+                        <div id="suifangbar" style="float: left;width: 70%"></div>
+                        <div id="suifangyuanhuan" style="float: left;width: 30%"></div>
+                        <div style="clear: both"></div>
+                    </div>
+                </div>
+                <div class="chartsr-b boxlights boxborder">
+                    <div class="chartboxTit">年度就诊人次</div>
+                    <div>
+                        <div id="jiuzhenbar" style="float: left;width: 70%"></div>
+                        <div id="jiuzhenyuanhuan" style="float: left;width: 30%"></div>
+                        <div style="clear: both"></div>
+                    </div>
+                    <!--<div id="churucharts"></div>-->
+                </div>
+                <div class="chartsr-c">
+                    <div style="float: left;width: 50%;box-sizing: border-box;padding-right: 5px">
+                        <div class="boxlights boxborder">
+                            <div class="chartboxTit">收入对比</div>
+                            <div id="shouruline"></div>
+                        </div>
+                    </div>
+                    <div style="float: left;width: 50%;box-sizing: border-box;padding-left: 5px">
+                        <div class="boxlights boxborder">
+                            <div class="chartboxTit">本月收入</div>
+                            <div id="benyuemeiguiBox">
+                                <div id="benyuemeigui" style="width: 95%;"></div>
+                                <div style="clear: both"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="clear: both"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="pageFoot clearfix">
+        <div class="serviceTit fl">服务动态</div>
+        <div id="scrollobj" class="serviceCont fl wrap" style="white-space:nowrap;overflow:hidden;"> 
+			<div class="cont" id="scrollCont"></div>
+		</div>
+    </div>
+</div>
+</body>
+<script type="text/javascript">
+    let pageTopDate = document.getElementsByClassName('pageTopDate')[0]
+    let pageTopTime = document.getElementsByClassName('pageTopTime')[0]
+    let timers = window.setInterval(times,1000)
+    function times() {
+        clearTimeout(timers);//清除定时器
+        let date = new Date()
+        let years = date.getFullYear()
+        let month = date.getMonth() + 1
+        let days = date.getDate()
+        let hours = date.getHours()
+        let minutes = (date.getMinutes() > 9) ? date.getMinutes() : '0' + date.getMinutes()
+        let seconds = (date.getSeconds() > 9) ? date.getSeconds() : '0' + date.getSeconds()
+        pageTopDate.innerHTML = years + '年' + month + '月' + days +  '日'
+        pageTopTime.innerHTML = hours + ':' + minutes + ':' + seconds
+        timers = window.setInterval(times,1000)
+    }
+</script>
+<script src="/static/js/daping/tongquanChartsJs.js"></script>
+</html>

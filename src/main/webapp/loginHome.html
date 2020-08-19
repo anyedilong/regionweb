@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>区域信息化平台</title>
+    <link rel="stylesheet" href="/static/css/home/loginHome.css">
+    <link rel="stylesheet" href="/static/img/icon/iconfont.css">
+    <script src="/static/js/common/jquery-2.1.4.min.js"></script>
+    <script src="/static/js/home/three.min.js"></script>
+    <script src="/static/img/icon/iconfont.js"></script>
+</head>
+<body>
+<div class="bag">
+    <canvas id="canvas"></canvas>
+    <div class="contents">
+        <div class="titleImg">
+            <img src="/static/img/loginHome/title_img.png" alt="">
+        </div>
+        <div class="linellae">
+            <ul class="containerCard clearfix">
+                <li>
+                    <div  class="box">
+                        <div class="box1">
+                            <div class="cardImg">
+                                <div>
+                                    <img src="/static/img/loginHome/icon_gongwei.png" alt="">
+                                </div>
+                            </div>
+                            <div class="cardTitle">
+                                <div>
+                                    马龙智慧健康服务平台
+                                    <hr/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="box11">
+                        	<a href="http://demo.sdboletong.com:8089" style="text-decoration:none;">
+	                            <div class="bgicon">
+	                                <img src="/static/img/loginHome/icon1.png" alt="">
+	                            </div>
+	                            <div class="inner" style="color:white;">马龙智慧健康服务平台</div>
+	                        </a>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div  class="box">
+                        <div class="box1">
+                            <div class="cardImg">
+                                <div>
+                                    <img src="/static/img/loginHome/icon_qyws.png" alt="">
+                                </div>
+                            </div>
+                            <div class="cardTitle">
+                                <div>
+                                    区域卫生管理系统
+                                    <hr/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="box11">
+                        	<a href="http://demo.sdboletong.com:8081/index.html" style="text-decoration:none;">
+	                            <div class="bgicon">
+	                                <img src="/static/img/loginHome/icon2.png" alt="">
+	                            </div>
+	                            <div class="inner" style="color:white;">区域卫生管理系统</div>
+                            </a>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div  class="box">
+                        <div class="box1">
+                            <div class="cardImg">
+                                <div>
+                                    <img src="/static/img/loginHome/icon_old.png" alt="">
+                                </div>
+                            </div>
+                            <div class="cardTitle">
+                                <div>
+                                    智慧养老
+                                    <hr/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="box11">
+                            <div class="bgicon bgicon3">
+                                <img src="/static/img/loginHome/icon3.png" alt="">
+                            </div>
+                            <div class="inner">
+                                智慧养老
+                            </div>
+                        </div>
+                    </div>
+                 </li>
+            	 <li>
+                    <div  class="box">
+                        <div class="box1">
+                            <div class="cardImg">
+                                <div>
+                                    <img src="/static/img/loginHome/icon_healthy.png" alt="">
+                                </div>
+                            </div>
+                            <div class="cardTitle">
+                                <div>
+                                    居民健康档案浏览器
+                                    <hr/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="box11">
+	                        <a href="http://demo.sdboletong.com:8098/dist/index.html" style="text-decoration:none;">
+	                            <div class="bgicon bgicon3">
+	                                <img src="/static/img/loginHome/img_health.png" alt="">
+	                            </div>
+	                            <div class="inner" style="color:white;">
+	                                居民健康档案浏览器
+	                            </div>
+                            </a>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="box">
+                        <div class="box1">
+                            <div class="cardImg">
+                                <div>
+                                    <img src="/static/img/loginHome/icon_his.png" alt="">
+                                </div>
+                            </div>
+                            <div class="cardTitle">
+                                <div>
+                                    医院信息系统
+                                    <hr/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="box11" onclick="StartupApp(1)">
+                            <div class="bgicon">
+                                <img src="/static/img/loginHome/icon_his_h.png" alt="">
+                            </div>
+                            <div class="inner">
+                                医院信息系统
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div  class="box">
+                        <div class="box1">
+                            <div class="cardImg">
+                                <div>
+                                    <img src="/static/img/loginHome/icon_lis.png" alt="">
+                                </div>
+                            </div>
+                            <div class="cardTitle">
+                                <div>
+                                    实验室信息系统
+                                    <hr/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="box11">
+                        	<a href="http://192.168.1.237:8088" style="text-decoration:none;">
+	                            <div class="bgicon">
+	                                <img src="/static/img/loginHome/icon_lis_h.png" alt="">
+	                            </div>
+	                            <div class="inner">
+	                                实验室信息系统
+	                            </div>
+	                         </a>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="box">
+                        <div class="box1">
+                            <div class="cardImg">
+                                <div>
+                                    <img src="/static/img/loginHome/icon_video.png" alt="">
+                                </div>
+                            </div>
+                            <div class="cardTitle">
+                                <div>
+                                    远程会诊
+                                    <hr/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="box11" onclick="StartupApp(2)">
+                            <div class="bgicon bgicon7">
+                                <img src="/static/img/loginHome/icon_video_h.png" alt="">
+                            </div>
+                            <div class="inner">
+                                远程会诊
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+            <div class="line"></div>
+        </div>
+    </div>
+    <footer class="footer">
+        <div class="foot clearfix">
+            <ul>
+                <li>技术支持 </li>
+                <li>云南普技智能科技有限公司</li>
+                <li><i class="iconfont qyhtel"></i>0874-8076181</li>
+                <li><i class="iconfont qyhe-mail"></i>sdblt@sdboletong.com</li>
+            </ul>
+            <div class="foot1">
+                为了更好的用户体验，本系统推荐使用谷歌浏览器
+                <img src="/static/img/loginHome/icon_google.svg" alt="">
+            </div>
+        </div>
+    </footer>
+</div>
+<script>
+    function StartupApp(index) {
+        try {
+            window.external.StartupApp(index);
+        }
+        catch(err){
+            //alert("异常")
+        }
+    }
+</script>
+</body>
+</html>

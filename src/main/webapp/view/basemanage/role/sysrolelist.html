@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>角色管理</title>
+    <link rel="stylesheet" href="/static/css/publicCss.css">
+    <link rel="stylesheet" href="/static/css/basemanage/sysmenu.css">
+    <script src="/static/js/publicJs.js"></script>
+    <script src="/static/js/basemanage/role/sysrolelist.js"></script>
+    <style>
+		select::-ms-expand{ display: none; }
+		tr td {
+			white-space: nowrap;
+		}
+	</style>
+</head>
+<body>
+    <div class="animated fadeInRight">
+	    <div class="dictionBox clearfix">
+		    <div class="dicBox dicBox-table" style="width:100%;">
+		          <div class="tableTit">角色目录</div>
+		          <div class="tableForm form-box clearfix">
+		              <div class="form-item" style="margin-right: 30px">
+		                  <label for="dictionName">角色名称</label>
+		                  <input type="text" name="roleName" id="roleName">
+		              </div>
+		              <div class="form-item" style="margin-right: 20px">
+		                  <input type="button" class="search" id="searchBtn" value="查询">
+		              </div>
+		              <div class="form-item" style="margin-right: 20px">
+		                  <input type="button" class="reset" id="resetBtn" value="重置">
+		              </div>
+		              <div class="form-item" style="float: right">
+		                  <input type="button" class="add" onclick="openSaveDialog();" value="添加">
+		              </div>
+		          </div>
+		          <div class="tableBox">		
+		                <div class="tabledata-box">
+		                    <table>
+		                        <thead>
+		                            <tr>
+		                                <th>角色名称</th>
+		                                <th>所属机构</th>
+				                        <th>备注</th>
+				                        <th>状态</th>
+				                        <th>操作</th>
+		                            </tr>
+		                        </thead>
+		                    </table>
+		                </div>
+		            </div>
+		            <div class="pagingBox" style="margin-top:20px">
+		                <div id="myPage" class="myPage"><!-- 这里显示分页 --></div>
+		            </div>
+	          </div>
+	    </div>
+	</div>
+</body>
+</html>

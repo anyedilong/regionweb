@@ -1,0 +1,241 @@
+html, body {
+    width: 100vw;height: 100vh;
+    overflow: hidden;
+    font-family: "Arial", "Microsoft YaHei", "黑体", "宋体", "微软雅黑", sans-serif;
+}
+.container {
+    width: 100vw;height: 100vh;
+    overflow: hidden;
+    background: #002d40;
+}
+.pageTop, .pageBody, .pageFoot {
+    width: 100%;
+}
+/*头部*/
+.pageTop {
+    height: 80px;
+    text-align: center;
+    position: fixed;
+    top: 0;left: 0;
+    background: -webkit-linear-gradient(left, #002d42 , #01425e, #002d42); /* Safari 5.1 - 6.0 */
+    background: -o-linear-gradient(right, #002d42, #01425e, #002d42); /* Opera 11.1 - 12.0 */
+    background: -moz-linear-gradient(right, #002d42, #01425e, #002d42); /* Firefox 3.6 - 15 */
+    background: linear-gradient(to right, #002d42 , #01425e, #002d42); /* 标准的语法 */
+}
+.pageTopBtn {
+    color: #65cff9;
+    line-height: 50px; font-size: 1vw;
+}
+
+.pageTopTit {
+    color: #fff;font-size: 2vw;
+    position: absolute;
+    bottom: 0;left: 35%;
+    height: 100%;width: 30%;
+    border-bottom:2px solid #ddd;
+    border-image: -webkit-linear-gradient(left, #12455a , #0a7eaf, #12455a) 30 30; /* Safari 5.1 - 6.0 */
+    border-image: -o-linear-gradient(right, #12455a, #0a7eaf, #12455a) 30 30; /* Opera 11.1 - 12.0 */
+    border-image: -moz-linear-gradient(right, #12455a, #0a7eaf, #12455a) 30 30; /* Firefox 3.6 - 15 */
+    border-image: linear-gradient(to right, #12455a , #0a7eaf, #12455a) 30 30; /* 标准的语法 */
+}
+.pageTopTit > div {
+      box-sizing: border-box;
+      height: auto;
+      position: absolute;
+      bottom: 0;
+  }
+.sanjiaozuo {
+    width: calc(100% + 30px); height: 0;
+    border-width: 0 30px 30px 0;
+    border-style: solid;
+    top: 50px;left: 0px;
+    z-index: 100;
+    border-color: transparent transparent #1d637d transparent;
+    position: absolute;right: 0;
+    margin-bottom: -3px;
+}
+.sanjiaozuo > span {
+    width: calc(100% + 30px); height:0;
+    border-width: 0 30px 30px 0;
+    border-style:solid;
+    border-color: transparent transparent #002d40 transparent;
+    position: absolute;top: 0px; right: -28px;
+}
+.sanjiaoyou {
+    width: calc(100% + 30px); height: 0;
+    border-width: 0 0 30px 30px;
+    border-style: solid;top: 50px;
+    border-color: transparent transparent #1d637d transparent;
+    position: absolute;right: 0;
+    margin-bottom: -3px;
+}
+.sanjiaoyou > span {
+    width: calc(100% + 30px); height: 0;
+    border-width: 0 0 30px 30px;
+    border-style: solid;
+    border-color: transparent transparent #002d40 transparent;
+    position: absolute;top: 0px; left: -28px;
+}
+.pageTopDT {
+    color: #65cff9;
+    line-height: 50px; font-size: 1vw;
+}
+.Top-btn {
+    float: left;
+}
+.Top-btn:nth-child(1) {
+    margin: 0 22px 0 36px;
+}
+.Top-btn >img {cursor: pointer}
+.page-topl, .page-topr {
+    position: absolute;top: 0;
+    height: 50px;width: 34%;
+    border-bottom:2px solid #ddd;
+    border-image: -webkit-linear-gradient(left, #12455a , #0a7eaf, #12455a) 30 30; /* Safari 5.1 - 6.0 */
+    border-image: -o-linear-gradient(right, #12455a, #0a7eaf, #12455a) 30 30; /* Opera 11.1 - 12.0 */
+    border-image: -moz-linear-gradient(right, #12455a, #0a7eaf, #12455a) 30 30; /* Firefox 3.6 - 15 */
+    border-image: linear-gradient(to right, #12455a , #0a7eaf, #12455a) 30 30; /* 标准的语法 */
+}
+.page-topl {left: 0;}
+.page-topr {right: 0;}
+.pageTopDate, .pageTopTime {
+    float: right; margin: 0 20px;
+}
+/*主体*/
+.pageBody {
+    height:  calc(100% - 140px);
+    padding: 10px; box-sizing: border-box;
+    color: #e9f6fe;
+    position: fixed;
+    top: 80px;left: 0;
+    margin-top: -30px;
+}
+.boxlights {
+    border-radius: 5px;
+    box-shadow: #125268 0px 0px 30px inset;
+    background: #00374c;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+    padding: 8px 10px 10px;
+}
+.boxborder {
+    border-top:2px solid #ddd;
+    border-image: -webkit-linear-gradient(left, #12455a , #0a7eaf, #12455a) 30 30; /* Safari 5.1 - 6.0 */
+    border-image: -o-linear-gradient(right, #12455a, #0a7eaf, #12455a) 30 30; /* Opera 11.1 - 12.0 */
+    border-image: -moz-linear-gradient(right, #12455a, #0a7eaf, #12455a) 30 30; /* Firefox 3.6 - 15 */
+    border-image: linear-gradient(to right, #12455a , #0a7eaf, #12455a) 30 30; /* 标准的语法 */
+}
+.boxborder-left {
+    border-left: 2px solid;
+    border-image: -webkit-linear-gradient(#00374c , #05b1fb, #00374c) 30 30; /* Safari 5.1 - 6.0 */
+    border-image: -o-linear-gradient(#00374c, #05b1fb, #00374c) 30 30; /* Opera 11.1 - 12.0 */
+    border-image: -moz-linear-gradient(#00374c, #05b1fb, #00374c) 30 30; /* Firefox 3.6 - 15 */
+    border-image: linear-gradient(#00374c , #05b1fb, #00374c) 30 30; /* 标准的语法 */
+}
+div>.boxlights:nth-last-child(1) {
+    margin: 0;
+}
+.iconBox {
+    width: 100%;height: 140px;
+}
+.iconBox-ul {
+    width: 100%; height: 100%;
+}
+.iconBox-li {
+    width: 20%;height: 100%; float: left;
+    position: relative;
+}
+.iconBox-li > div {
+    position: absolute; bottom: 16px;
+    height: 80px;left: 50%; min-width: 260px;
+    -webkit-transform: translateX(-50%);
+    -moz-transform: translateX(-50%);
+    -ms-transform: translateX(-50%);
+    -o-transform: translateX(-50%);
+    transform: translateX(-50%);
+}
+.iconBox-liicon {
+    width: 135px; height: 80px;
+    text-align: center; line-height: 80px;float: left;
+    /*margin-right: 26px;*/
+}
+.iconBox-litxt {
+   float: right;
+}
+.iconBox-litxtTit {
+    font-size: 0.83vw; color: #b9e8fc; line-height: 16px; margin: 16px 0 20px;
+}
+.iconBox-litxtTitData {
+    font-size: 1.25vw;color: #f0f9fe; line-height: 24px;
+}
+.chartsBox-l, .chartsBox-c, .chartsBox-r {
+    padding: 0;
+}
+.chartsBox-l {
+    height: calc(100% + 30px);
+    padding: 0 5px 0 0;
+}
+.chartsBox-c {
+    margin-top: 30px;
+    padding: 0 5px;
+}
+.chartsBox-r {
+    height: calc(100% + 30px);
+    padding: 0 0 0 5px;
+}
+.chartboxTit {
+    font-size: 0.93vw; text-indent: 12px;
+    height: 24px;line-height: 24px;
+    border-left: 3px solid #00a0ea;
+}
+
+.jiayimeiguitop {
+    height: 60px; width: 100%;
+    padding-top: 12px; box-sizing: border-box;
+}
+.jiayimeiguitop-dis {
+    font-size: 0.62vw; color: #078ac0;
+}
+.jiayimeiguitop-data {
+    font-size: 0.72vw; color: #f0fafc;
+}
+
+/*主体中间部分*/
+.chartsc-a {
+    text-align: center;padding: 40px 0 30px;
+}
+.chartsc-a-data {
+    font-size: 1vw; color: #f0f9fe;
+}
+.chartsc-a-dis {
+    font-size: 0.72vw; color: #b8e9fa;
+}
+/*底部*/
+.pageFoot {
+    height: 60px; line-height: 60px;
+    background: #013f58; color: #e9f8fd;
+    position: fixed;
+    overflow: hidden;bottom: 0;left: 0;
+}
+.serviceTit {
+    width: 120px; height: 60px;
+    font-size: 0.93vw; text-align: center;
+    color: #eaf7ff; background: #044d7a;
+}
+.serviceCont {
+    width: calc(100% - 120px);
+    height: 100%;
+    padding: 0 15px; box-sizing: border-box;
+}
+.serviceUl {
+    width: 100%;
+    height: calc(100% + 18px);
+    overflow-x: scroll;white-space: nowrap;
+}
+.serviceLi {
+    display:inline-block;
+    font-size: 0.62vw; margin-left: 20px;
+}
+.serviceLi:before{
+    content: '•   ';
+}

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <title>科室目录</title>
+    <link rel="stylesheet" href="/static/css/publicCss.css">
+    <link rel="stylesheet" href="/static/css/basemanage/sysmenu.css">
+    <script src="/static/js/publicJs.js"></script>
+    <script src="/static/js/basemanage/department/sysdeplist.js"></script>
+	<style>
+		select::-ms-expand{ display: none; }
+		tr td {
+			white-space: nowrap;
+		}
+		.pagination {
+			margin: 0;
+		}
+	</style>
+</head>
+<body>
+    <div class="animated fadeInRight">
+		<div class="dictionBox clearfix">
+			<div class="dicBox dicBox-table" style="width:100%;">
+		          <div class="tableTit">科室目录</div>
+		          <div class="tableForm form-box clearfix">
+		              <div class="form-item" style="margin-right: 30px">
+		                  <label for="depName">科室名称：</label>
+		                  <input type="text" name="depName" id="depName">
+		              </div>
+		              <div class="form-item" style="margin-right: 20px">
+		                  <input type="button" class="search" id="searchBtn" value="查询">
+		              </div>
+		              <div class="form-item" style="margin-right: 20px">
+		                  <input type="button" class="reset" id="resetBtn" value="重置">
+		              </div>
+		          </div>
+	             	<div class="tableBox">		
+		                <div class="tabledata-box">
+		                    <table>
+		                        <thead>
+		                            <tr>
+				                        <th>科室名称</th>
+				                        <th>科室代码</th>
+		                            </tr>
+		                        </thead>
+		                    </table>
+		                </div>
+	            	</div>
+		            <div class="pagingBox" style="margin-top:20px">
+		                <div id="myPage" class="myPage"><!-- 这里显示分页 --></div>
+		            </div>
+	          </div>
+	    </div>
+	</div>
+</body>
+</html>

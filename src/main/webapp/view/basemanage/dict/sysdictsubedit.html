@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>字典目录</title>
+    <link rel="stylesheet" href="/static/css/publicCss.css">
+    <script src="/static/js/publicJs.js"></script>
+    <script src="/static/js/basemanage/dict/sysdictsubedit.js"></script>
+    <style type="text/css">
+    	body {
+    		padding: 0;background: none;
+    	}
+    	.ibox-title {
+    		border: none;
+    	}
+    	.addBtn {
+		    display: block;
+		    margin: 0 auto;
+		    color: #fffeff;
+		    background: -webkit-linear-gradient(left, #58b6fe, #0c95ff);
+		    background: -o-linear-gradient(right, #58b6fe, #0c95ff);		
+		    background: -moz-linear-gradient(right, #58b6fe, #0c95ff);		  
+		    background: linear-gradient(to right, #58b6fe, #0c95ff);		   
+		    border: none;
+		    padding: 0 20px;
+		    height: 30px;
+		}
+		.addBtn i {margin-right: 10px; }
+    	::-webkit-scrollbar{  
+		    width: 0px;    
+		    background-color: none;  
+		}  
+
+		/*定义滚动条轨道 内阴影+圆角*/  
+		::-webkit-scrollbar-track{   
+		    background-color: none;  
+		}  
+		
+		/*定义滑块 内阴影+圆角*/  
+		::-webkit-scrollbar-thumb{  
+		     background-color: none;  
+		}  
+		/*定义最上方和最下方的按钮*/
+		::-webkit-scrollbar-button{		    
+		     background-color: none;  
+		}
+		.form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control {
+		    background-color: none !important;
+		}
+    </style>
+</head>
+<body>
+    <div class="animated fadeInRight">
+        <div class="row" style="width:100%;margin: 0;padding:15px; box-sizing:border-box;">
+            <div class="col-sm">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>字典信息</h5>
+                    </div>
+                    <div class="ibox-content">
+                        <form class="form-horizontal m-t" id="saveForm" novalidate="novalidate">
+                            <input type="hidden" name="id"/>
+                            <input type="hidden" name="dictId" />
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">字典名称：</label>
+                                <div class="col-sm-8">
+                                    <input id="text" name="text" class="form-control" type="text">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">字典值：</label>
+                                <div class="col-sm-8">
+                                    <input id="value" name="value" class="form-control" type="text" oninput="value=value.replace(/[^\d]/g,'')" maxlength="2">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">状态：</label>
+                                <div class="col-sm-8">
+                                    <select id="status" name="status"  style="width:100%;" class="form-control">
+										<option value='1'>正常</option> 
+										<option value='2'>冻结</option> 
+										<option value='3'> 删除</option>
+                                    </select>
+                                </div>
+                            </div>
+                             <div class="form-group">
+                                <label class="col-sm-3 control-label">备注：</label>
+                                <div class="col-sm-8">
+                                	 <input id="remarks" name="remarks" class="form-control" type="text">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">排序号：</label>
+                                <div class="col-sm-8">
+                                    <input id="orderNum" name="orderNum" class="form-control" type="text">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="form-item">
+                        <button class="addBtn" onclick="saveForm()">
+                            <i class="qyhtick-user-icon"></i>保存
+                        </button>
+                    </div>
+		            <!-- <div class="ibox-content text-center">
+		                <button class="btn btn-info" type="button" onclick="saveForm()"><i class="fa fa-save"></i>保存</button>
+		            </div> -->
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,150 @@
+.box-div {
+	height: calc(100% - 40px);
+	margin-bottom: 0px;
+	overflow: auto;
+}
+
+.box-content-div {
+	height: calc(100%);
+	overflow: auto;
+}
+
+.search-div {
+	border-bottom: 1px solid #d5e4e1;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+.search-div .form-group {
+	padding: 5px;
+}
+
+.search-div .form-group .control-label {
+	padding-left: 5px;
+	padding-right: 5px;
+}
+
+.grid-div {
+	position: relative;
+}
+
+.search-where-div {
+	/* width: calc(100% - 60px); */
+	
+}
+
+.search-button-div {
+	/* border: 1px solid #d5e4e1; */
+	padding-bottom: 13px;
+}
+
+.btn-search {
+	padding: 6px 28px;
+}
+
+.fc {
+	clear: both;
+}
+
+.fl {
+	float: left;
+}
+
+.fr {
+	float: right;
+}
+
+.w50 {
+	width: 90px
+}
+
+.handle-button-div {
+	position: absolute;
+	height: 0px;
+	top: 5px;
+	right: 45px;
+}
+
+.button-handle {
+	margin-top: 5px;
+	padding: 3PX 10px;
+}
+
+.button-handle-row {
+	margin: 0 5px;
+}
+
+.dialog-handle {
+	position: fixed;
+	top: 35px;
+	right: 26px;
+	z-index: 100;
+}
+
+.icon-a {
+	position: relative;
+}
+
+.icon-a i.faCheck {
+	position: absolute;
+	right: 10px;
+	bottom: -30px;
+}
+
+.icon-a i.faIcon {
+	position: absolute;
+	right: 15px;
+	bottom: -25px;
+	font-size: 60px;
+}
+
+.icon-a img {
+	height: 85px;
+	width: 85px;
+	padding: 5px;
+}
+
+.hd {
+	display: none !important;
+}
+
+.selTree {
+	position: absolute;
+	overflow: auto;
+	height: 300px;
+	z-index: 100;
+	border: 1px solid #d5e4e1;
+	background-color: #fff;
+}
+
+.font-l {
+	text-align: right;
+}
+
+.show-row {
+	padding: 5px;
+}
+
+.show-row .show-text {
+	
+}
+
+.show-row .control-label {
+	
+}
+
+.show-content {
+	
+}
+
+/* zTree 添加按钮  */
+span.button.add {
+	margin-left: 2px;
+	margin-right: -1px;
+	background-position: -144px 0;
+	vertical-align: top;
+}
+/*隐藏  下拉检索框*/
+.chosen-drop .chosen-search {
+    display: none;
+}

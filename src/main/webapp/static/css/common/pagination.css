@@ -1,0 +1,31 @@
+@charset "utf-8";      
+.myPage {
+	text-align: center;font-size: 14px;
+}
+.myPage a {
+    text-decoration: none;
+	/*border: 1px solid #AAE;*/
+	color: #959094;
+}
+
+.myPage a, .myPage span {
+    display: inline-block;
+    /*padding: 0.1em 0.4em;*/
+	height: 28px;line-height: 28px;
+	min-width: 28px;text-align: center;
+    margin: 0 5px;
+}
+
+.myPage .current {
+    background: #0ebcf8;
+    color: #fff;
+    border-radius: 2px;
+	/*border: 1px solid #AAE;*/
+}
+
+.myPage .current.prev, .myPage .current.next{
+	color:#999;
+	border-color:#999;
+	background:#fff;
+}
+

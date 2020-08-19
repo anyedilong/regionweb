@@ -1,0 +1,88 @@
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>图表选择</title>
+	<link rel="stylesheet" href="/static/css/publicCss.css">
+	<link rel="stylesheet" href="/static/css/basemanage/style.main.css">
+	<link rel="stylesheet" href="/static/css/common/font-awesome.min93e3.css">
+    <script src="/static/js/publicJs.js"></script>
+	<script type="text/javascript">
+    
+	    function clickIcon(eve){
+	    	var icon = $(eve).attr("data-icon");
+	    	$("#iconDiv .faCheck").addClass("hd");
+	    	$(eve).find(".faCheck").removeClass("hd");
+	    	
+	    	$("#iconPath").val(icon);
+	    }
+	    
+	    function checkIcon(){
+	    	var icon = $("#iconPath").val();
+	    	parent[1].iconDialogClose(icon);
+	    }
+    
+	</script>
+</head>
+<body>
+    <div class="animated fadeInRight">
+    <input type="hidden" id="iconPath">
+        <div class="row">
+            <div class="col-sm">
+                <div class="ibox float-e-margins">
+                    <div id="iconDiv" class="ibox-content">
+                        
+		                   <a data-icon="qyhnav_icon_bigscreen" class="icon-a" onclick="clickIcon(this);">
+		                       <img alt="" src="#">
+		                       <i class="fa qyhnav_icon_bigscreen faIcon" style="right: 22px; bottom: -25px; font-size: 60px;"></i>
+		                       <i class="fa fa-check-circle faCheck hd"></i>
+		                   </a>  
+		                   <a data-icon="qyhnav_icon_red" class="icon-a" onclick="clickIcon(this);">
+		                       <img alt="" src="">
+		                       <i class="fa qyhnav_icon_red faIcon" style="right: 15px; bottom: -25px; font-size: 60px;"></i>
+		                       <i class="fa fa-check-circle faCheck hd"></i>
+		                   </a>  
+		                   <a data-icon="qyhnav_icon_browser" class="icon-a" onclick="clickIcon(this);">
+		                       <img alt="" src="">
+		                       <i class="fa qyhnav_icon_browser faIcon" style="right: 22px; bottom: -25px; font-size: 60px;"></i>
+		                       <i class="fa fa-check-circle faCheck hd"></i>
+		                   </a>  
+		                   <a data-icon="qyhnav_icon_familydoctor" class="icon-a" onclick="clickIcon(this);">
+		                       <img alt="" src="">
+		                       <i class="fa qyhnav_icon_familydoctor faIcon" style="right: 20px; bottom: -25px; font-size: 60px;"></i>
+		                       <i class="fa fa-check-circle faCheck hd"></i>
+		                   </a> 
+		                   <a data-icon="qyhnav_icon_yfjz" class="icon-a" onclick="clickIcon(this);">
+		                       <img alt="" src="">
+		                       <i class="fa qyhnav_icon_yfjz faIcon" style="right: 20px; bottom: -25px; font-size: 60px;"></i>
+		                       <i class="fa fa-check-circle faCheck hd"></i>
+		                   </a>
+		                   <a data-icon="qyhnav_icon_mbsf" class="icon-a" onclick="clickIcon(this);">
+		                       <img alt="" src="">
+		                       <i class="fa qyhnav_icon_mbsf faIcon" style="right: 20px; bottom: -25px; font-size: 60px;"></i>
+		                       <i class="fa fa-check-circle faCheck hd"></i>
+		                   </a>
+                           <a data-icon="qyhnav_icon_gdt" class="icon-a" onclick="clickIcon(this);">
+		                       <img alt="" src="">
+		                       <i class="fa qyhnav_icon_gdt faIcon" style="right: 20px; bottom: -25px; font-size: 60px;"></i>
+		                       <i class="fa fa-check-circle faCheck hd"></i>
+		                   </a>
+		                   <a data-icon="qyhnav_icon_tjfx" class="icon-a" onclick="clickIcon(this);">
+		                       <img alt="" src="">
+		                       <i class="fa qyhnav_icon_tjfx faIcon" style="right: 20px; bottom: -25px; font-size: 60px;"></i>
+		                       <i class="fa fa-check-circle faCheck hd"></i>
+		                   </a>
+		                   <a data-icon="qyhnav_icon_system" class="icon-a" onclick="clickIcon(this);">
+		                       <img alt="" src="">
+		                       <i class="fa qyhnav_icon_system faIcon" style="right: 20px; bottom: -25px; font-size: 60px;"></i>
+		                       <i class="fa fa-check-circle faCheck hd"></i>
+		                   </a>
+                    </div>
+		            <div class="ibox-content text-center" style="padding:10px 0 0 0;">
+		                <button class="btn btn-info" type="button" onclick="checkIcon()"><i class="fa fa-check"></i>确定</button>
+		            </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

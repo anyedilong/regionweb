@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <title>医药机构目录</title>
+    <link rel="stylesheet" href="/static/css/publicCss.css">
+    <link rel="stylesheet" href="/static/css/basemanage/sysmenu.css">
+    <script src="/static/js/publicJs.js"></script>
+    <script src="/static/js/basemanage/org/sysorglist.js"></script>
+	<style>
+		select::-ms-expand{ display: none; }
+		tr td {
+			white-space: nowrap;
+		}
+		.pagination {
+			margin: 0;
+		}
+	</style>
+</head>
+<body>
+    <div class="animated fadeInRight">
+		<div class="dictionBox clearfix">
+			<div class="dicBox dicBox-table" style="width:100%;">
+		          <div class="tableTit">医药机构目录</div>
+		          <div class="tableForm form-box clearfix">
+		              <div class="form-item" style="margin-right: 30px">
+		                  <label for="name">机构名称：</label>
+		                  <input type="text" name="orgName" id="orgName">
+		              </div>
+		              <div class="form-item" style="margin-right: 30px">
+		                  <label for="simplePinyin">机构代码：</label>
+		                  <input type="text" name="orgCode" id="orgCode">
+		              </div>
+		              <div class="form-item" style="margin-right: 20px">
+		                  <input type="button" class="search" id="searchBtn" value="查询">
+		              </div>
+		              <div class="form-item" style="margin-right: 20px">
+		                  <input type="button" class="reset" id="resetBtn" value="重置">
+		              </div>
+		              <div class="form-item" style="float: right">
+		                  <input type="button" class="add" onclick="openSaveDialog();" value="添加">
+		              </div>
+		          </div>
+		            <div class="tableBox">		
+		                <div class="tabledata-box">
+		                    <table>
+		                        <thead>
+		                            <tr>
+		                                <th>机构名称</th>
+				                        <th>机构代码</th>
+				                        <th>区划名称</th>
+		                                <th>操作</th>
+		                            </tr>
+		                        </thead>
+		                    </table>
+		                </div>
+		            </div>
+		            <div class="pagingBox" style="margin-top:20px">
+		                <div id="myPage" class="myPage"><!-- 这里显示分页 --></div>
+		            </div>
+	          </div>
+	    </div>
+	</div>
+</body>
+</html>
